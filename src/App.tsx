@@ -1,4 +1,5 @@
-import { Container } from "@material-ui/core";
+import { Container, CardMedia } from "@material-ui/core";
+
 import { Top } from "./Top";
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
         }}
       >
         <h1>いろおに</h1>
-        <img src="logo192.png" className="App-logo" alt="logo" />
+        <CardMedia component="img" image="images/cherry.jpg" title="App-logo" />
         <Top></Top>
       </Container>
     </div>
