@@ -9,25 +9,14 @@ function App() {
     count: number;
   };
   const [pictureColors, setPictureColors] = useState<Color[]>([]);
-
-  async function getColors() {
-    const result = await analyze("images/cherry.jpg");
-    setPictureColors(result.slice(0, 100));
-  }
-
-  useEffect(() => {
-    getColors();
-  }, []);
-
   // contextを状態として持つ
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   // 画像読み込み完了トリガー
   const [loaded, setLoaded] = useState(false);
-  // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
+
   useEffect(() => {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    const canvasContext = canvas.getContext("2d");
-    setContext(canvasContext);
+    getColors();
+    getCanvasContext();
   }, []);
 
   useEffect(() => {
@@ -47,6 +36,17 @@ function App() {
       // それに続く処理
     }
   }, [loaded]);
+
+  async function getColors() {
+    const result = await analyze("images/cherry.jpg");
+    setPictureColors(result.slice(0, 100));
+  }
+  // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
+  function getCanvasContext() {
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    const canvasContext = canvas.getContext("2d");
+    setContext(canvasContext);
+  }
 
   return (
     <div className="App">
