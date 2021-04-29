@@ -1,16 +1,23 @@
+import { useState, useEffect } from "react";
 import { Container, CardMedia } from "@material-ui/core";
 import analyze from "rgbaster";
 import { Top } from "./Top";
 
 function App() {
+  type Color = {
+    color: string;
+    count: number;
+  };
+  const [pictureColors, setPictureColors] = useState<Color[]>([]);
+
   async function getColors() {
     const result = await analyze("images/cherry.jpg");
-    console.log(result);
-    console.log(
-      `The dominant color is ${result[0].color} with ${result[0].count} occurrence(s)`
-    );
+    setPictureColors(result.slice(0, 100));
   }
-  getColors();
+
+  useEffect(() => {
+    getColors();
+  }, []);
 
   return (
     <div className="App">
@@ -25,6 +32,22 @@ function App() {
         }}
       >
         <h1>いろおに</h1>
+        <div>
+          {pictureColors.map((color) => {
+            return (
+              <span
+                key={color.color}
+                style={{
+                  width: "20px",
+                  height: "30px",
+                  background: color.color,
+                }}
+              >
+                あ
+              </span>
+            );
+          })}
+        </div>
         <CardMedia component="img" image="images/cherry.jpg" title="App-logo" />
         <Top></Top>
       </Container>
