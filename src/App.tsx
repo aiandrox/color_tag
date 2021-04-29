@@ -1,13 +1,23 @@
-import React from "react";
-import { Button } from "@material-ui/core";
+import { Container } from "@material-ui/core";
+import { Top } from "./Top";
 
 function App() {
   return (
     <div className="App">
-      <img src="logo192.png" className="App-logo" alt="logo" />
-      <Button variant="contained" color="primary">
-        いろいろなーにいろ？
-      </Button>
+      <Container
+        maxWidth="sm"
+        style={{
+          height: "100vh",
+          justifyContent: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <h1>いろおに</h1>
+        <img src="logo192.png" className="App-logo" alt="logo" />
+        <Top></Top>
+      </Container>
     </div>
   );
 }
