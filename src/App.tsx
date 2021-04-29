@@ -1,8 +1,17 @@
 import { Container, CardMedia } from "@material-ui/core";
-
+import analyze from "rgbaster";
 import { Top } from "./Top";
 
 function App() {
+  async function getColors() {
+    const result = await analyze("images/cherry.jpg");
+    console.log(result);
+    console.log(
+      `The dominant color is ${result[0].color} with ${result[0].count} occurrence(s)`
+    );
+  }
+  getColors();
+
   return (
     <div className="App">
       <Container
