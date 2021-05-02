@@ -16,6 +16,7 @@ function App() {
   // 画像読み込み完了トリガー
   const [loaded, setLoaded] = useState(false);
   const [clickedColor, setClickedColor] = useState("#ffffff");
+  const [clickCount, setClickCount] = useState(0);
 
   useEffect(() => {
     getPictureColors();
@@ -59,12 +60,14 @@ function App() {
       .data;
     const colorString = `rgb(${pointColorData[0]}, ${pointColorData[1]}, ${pointColorData[2]})`;
     setClickedColor(hexToRgbStr(colorString));
+    setClickCount(clickCount + 1);
   }
 
   function clickStart() {
     const color =
       pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
     setQuestionColor(hexToRgbStr(color));
+    setClickCount(0);
   }
 
   return (
@@ -94,7 +97,7 @@ function App() {
             background: clickedColor,
           }}
         >
-          {clickedColor}
+          {clickedColor} {clickCount}回間違えたよ
         </span>
         <canvas
           width="1000"
@@ -102,22 +105,6 @@ function App() {
           id="canvas"
           onClick={clickCanvasArea}
         ></canvas>
-        <div>
-          {pictureColors.map((color) => {
-            return (
-              <span
-                key={color.color}
-                style={{
-                  width: "20px",
-                  height: "30px",
-                  background: color.color,
-                }}
-              >
-                あ
-              </span>
-            );
-          })}
-        </div>
       </Container>
     </div>
   );
