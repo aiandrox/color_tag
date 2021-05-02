@@ -7,7 +7,9 @@ function App() {
     color: string;
     count: number;
   };
+
   const [pictureColors, setPictureColors] = useState<Color[]>([]);
+  const [questionColor, setQuestionColor] = useState<string>("");
   // contextを状態として持つ
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   // 画像読み込み完了トリガー
@@ -15,7 +17,7 @@ function App() {
   const [clickedColor, setClickedColor] = useState("rgb(255, 255, 255)");
 
   useEffect(() => {
-    getColors();
+    getPictureColors();
     getCanvasContext();
   }, []);
 
@@ -37,7 +39,7 @@ function App() {
     }
   }, [loaded]);
 
-  async function getColors() {
+  async function getPictureColors() {
     const result = await analyze("images/cherry.jpg");
     setPictureColors(result.slice(0, 100));
   }
@@ -58,7 +60,9 @@ function App() {
   }
 
   function clickStart() {
-    console.log("hoge");
+    setQuestionColor(
+      pictureColors[Math.floor(Math.random() * pictureColors.length)].color
+    );
   }
 
   return (
@@ -74,6 +78,7 @@ function App() {
         }}
       >
         <h1>いろおに</h1>
+        {questionColor}
         <span
           style={{
             width: "20px",
@@ -83,6 +88,14 @@ function App() {
         >
           あ
         </span>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          onClick={clickStart}
+        >
+          いろいろなーにいろ？
+        </Button>
         {clickedColor}
         <canvas
           width="1000"
@@ -106,15 +119,6 @@ function App() {
             );
           })}
         </div>
-
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={clickStart}
-        >
-          いろいろなーにいろ？
-        </Button>
       </Container>
     </div>
   );
