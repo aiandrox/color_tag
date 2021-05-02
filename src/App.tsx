@@ -50,10 +50,10 @@ function App() {
   }
 
   function clickCanvasArea(evt: any) {
-    // todo: 多分動かん
-    const x = parseInt(evt.clientX);
-    const y = parseInt(evt.clientY);
-    const pointColorData: any = context!.getImageData(x, y, 1, 1).data;
+    const x: number = parseInt(evt.nativeEvent.offsetX);
+    const y: number = parseInt(evt.nativeEvent.offsetY);
+    const pointColorData: Uint8ClampedArray = context!.getImageData(x, y, 1, 1)
+      .data;
     const colorString = `rgb(${pointColorData[0]}, ${pointColorData[1]}, ${pointColorData[2]})`;
     setClickedColor(colorString);
   }
@@ -82,8 +82,8 @@ function App() {
         </span>
         {clickedColor}
         <canvas
-          width="880"
-          height="520"
+          width="1000"
+          height="667"
           id="canvas"
           onClick={clickCanvasArea}
         ></canvas>
