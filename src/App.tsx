@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Container, Button } from "@material-ui/core";
 import analyze from "rgbaster";
+import { hexToRgbStr } from "./lib/CalcColor";
 
 function App() {
   type Color = {
@@ -14,7 +15,7 @@ function App() {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   // 画像読み込み完了トリガー
   const [loaded, setLoaded] = useState(false);
-  const [clickedColor, setClickedColor] = useState("rgb(255, 255, 255)");
+  const [clickedColor, setClickedColor] = useState("#ffffff");
 
   useEffect(() => {
     getPictureColors();
@@ -43,6 +44,7 @@ function App() {
     const result = await analyze("images/cherry.jpg");
     setPictureColors(result.slice(0, 100));
   }
+
   // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
   function getCanvasContext() {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -56,13 +58,13 @@ function App() {
     const pointColorData: Uint8ClampedArray = context!.getImageData(x, y, 1, 1)
       .data;
     const colorString = `rgb(${pointColorData[0]}, ${pointColorData[1]}, ${pointColorData[2]})`;
-    setClickedColor(colorString);
+    setClickedColor(hexToRgbStr(colorString));
   }
 
   function clickStart() {
-    setQuestionColor(
-      pictureColors[Math.floor(Math.random() * pictureColors.length)].color
-    );
+    const color =
+      pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
+    setQuestionColor(hexToRgbStr(color));
   }
 
   return (
@@ -79,15 +81,6 @@ function App() {
       >
         <h1>いろおに</h1>
         {questionColor}
-        <span
-          style={{
-            width: "20px",
-            height: "30px",
-            background: clickedColor,
-          }}
-        >
-          あ
-        </span>
         <Button
           variant="contained"
           color="primary"
@@ -96,7 +89,13 @@ function App() {
         >
           いろいろなーにいろ？
         </Button>
-        {clickedColor}
+        <span
+          style={{
+            background: clickedColor,
+          }}
+        >
+          {clickedColor}
+        </span>
         <canvas
           width="1000"
           height="667"
