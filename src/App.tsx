@@ -13,6 +13,7 @@ function App() {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   // 画像読み込み完了トリガー
   const [loaded, setLoaded] = useState(false);
+  const [clickedColor, setClickedColor] = useState("rgb(255, 255, 255)");
 
   useEffect(() => {
     getColors();
@@ -48,6 +49,15 @@ function App() {
     setContext(canvasContext);
   }
 
+  function clickCanvasArea(evt: any) {
+    // todo: 多分動かん
+    const x = parseInt(evt.clientX);
+    const y = parseInt(evt.clientY);
+    const pointColorData: any = context!.getImageData(x, y, 1, 1).data;
+    const colorString = `rgb(${pointColorData[0]}, ${pointColorData[1]}, ${pointColorData[2]})`;
+    setClickedColor(colorString);
+  }
+
   return (
     <div className="App">
       <Container
@@ -61,7 +71,22 @@ function App() {
         }}
       >
         <h1>いろおに</h1>
-        <canvas width="880" height="520" id="canvas"></canvas>
+        <span
+          style={{
+            width: "20px",
+            height: "30px",
+            background: clickedColor,
+          }}
+        >
+          あ
+        </span>
+        {clickedColor}
+        <canvas
+          width="880"
+          height="520"
+          id="canvas"
+          onClick={clickCanvasArea}
+        ></canvas>
         <div>
           {pictureColors.map((color) => {
             return (
