@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { Container } from "@material-ui/core";
+import { Container, Button } from "@material-ui/core";
 import analyze from "rgbaster";
-import { Top } from "./Top";
 
 function App() {
   type Color = {
@@ -58,6 +57,10 @@ function App() {
     setClickedColor(colorString);
   }
 
+  function clickStart() {
+    console.log("hoge");
+  }
+
   return (
     <div className="App">
       <Container
@@ -103,7 +106,15 @@ function App() {
             );
           })}
         </div>
-        <Top></Top>
+
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          onClick={clickStart}
+        >
+          いろいろなーにいろ？
+        </Button>
       </Container>
     </div>
   );
