@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, CardMedia } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import analyze from "rgbaster";
 import { Top } from "./Top";
 
@@ -103,12 +103,6 @@ function App() {
             );
           })}
         </div>
-        <CardMedia
-          component="img"
-          image="images/cherry.jpg"
-          title="image"
-          id="image"
-        />
         <Top></Top>
       </Container>
     </div>
