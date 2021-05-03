@@ -10,6 +10,7 @@ function App() {
     count: number;
   };
 
+  const [picture, setPicture] = useState<string>("images/cherry.jpg");
   const [pictureColors, setPictureColors] = useState<Color[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("#ffffff");
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
@@ -20,9 +21,13 @@ function App() {
   const [diffPer, setDiffPer] = useState(0);
 
   useEffect(() => {
+    selectPicture();
+  }, []);
+
+  useEffect(() => {
     getPictureColors();
     getCanvasContext();
-  }, []);
+  }, [picture]);
 
   useEffect(() => {
     // 色差の反映
@@ -33,14 +38,12 @@ function App() {
   useEffect(() => {
     if (context !== null) {
       const img = new Image();
-      img.src = "images/cherry.jpg"; // 描画する画像など
+      img.src = picture;
       img.onload = () => {
         context.drawImage(img, 0, 0);
-        // 更にこれに続いて何か処理をしたい場合
-        setLoaded(true);
       };
     }
-  }, [context]);
+  }, [context, picture]);
 
   useEffect(() => {
     if (loaded) {
@@ -48,8 +51,18 @@ function App() {
     }
   }, [loaded]);
 
+  function selectPicture() {
+    const pictures = [
+      "images/cherry.jpg",
+      "images/nemophila.jpg",
+      "leaves.jpg",
+    ];
+    const picture = pictures[Math.floor(Math.random() * pictures.length)];
+    setPicture(picture);
+  }
+
   async function getPictureColors() {
-    const result = await analyze("images/cherry.jpg");
+    const result = await analyze(picture);
     setPictureColors(result.slice(0, 100));
   }
 
