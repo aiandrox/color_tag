@@ -1,9 +1,9 @@
 import { Button } from "@material-ui/core";
-type ITop = {
+type TopProps = {
   clickStart: () => void;
 };
 
-function Top(props: ITop) {
+const Top = (props: TopProps) => {
   return (
     <div>
       <Button
@@ -16,6 +16,6 @@ function Top(props: ITop) {
       </Button>
     </div>
   );
-}
+};
 
 export default Top;

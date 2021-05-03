@@ -6,12 +6,12 @@ import { hexToRgbStr } from "./lib/CalcColor";
 
 import Top from "./Top";
 
-function App() {
-  type Color = {
-    color: string;
-    count: number;
-  };
+type Color = {
+  color: string;
+  count: number;
+};
 
+const App = () => {
   const [picture, setPicture] = useState<string>("images/cherry.jpg");
   const [pictureColors, setPictureColors] = useState<Color[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("#ffffff");
@@ -53,29 +53,29 @@ function App() {
     }
   }, [loaded]);
 
-  function selectPicture() {
+  const selectPicture = () => {
     const pictures = [
       "images/cherry.jpg",
       "images/nemophila.jpg",
-      "leaves.jpg",
+      "images/leaves.jpg",
     ];
     const picture = pictures[Math.floor(Math.random() * pictures.length)];
     setPicture(picture);
-  }
+  };
 
-  async function getPictureColors() {
+  const getPictureColors = async () => {
     const result = await analyze(picture);
     setPictureColors(result.slice(0, 100));
-  }
+  };
 
   // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
-  function getCanvasContext() {
+  const getCanvasContext = () => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const canvasContext = canvas.getContext("2d");
     setContext(canvasContext);
-  }
+  };
 
-  function clickCanvasArea(evt: any) {
+  const clickCanvasArea = (evt: any) => {
     const x: number = parseInt(evt.nativeEvent.offsetX);
     const y: number = parseInt(evt.nativeEvent.offsetY);
     const pointColorData: Uint8ClampedArray = context!.getImageData(x, y, 1, 1)
@@ -83,14 +83,14 @@ function App() {
     const colorString = `rgb(${pointColorData[0]}, ${pointColorData[1]}, ${pointColorData[2]})`;
     setClickedColor(hexToRgbStr(colorString));
     setClickCount(clickCount + 1);
-  }
+  };
 
-  function clickStart() {
+  const clickStart = () => {
     const color =
       pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
     setQuestionColor(hexToRgbStr(color));
     setClickCount(0);
-  }
+  };
 
   return (
     <div className="App">
@@ -127,6 +127,6 @@ function App() {
       </Container>
     </div>
   );
-}
+};
 
 export default App;
