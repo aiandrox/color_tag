@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Container, Button } from "@material-ui/core";
 import analyze from "rgbaster";
+import chroma from "chroma-js";
 import { hexToRgbStr } from "./lib/CalcColor";
 
 function App() {
@@ -10,18 +11,24 @@ function App() {
   };
 
   const [pictureColors, setPictureColors] = useState<Color[]>([]);
-  const [questionColor, setQuestionColor] = useState<string>("");
-  // contextを状態として持つ
+  const [questionColor, setQuestionColor] = useState<string>("#ffffff");
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   // 画像読み込み完了トリガー
   const [loaded, setLoaded] = useState(false);
   const [clickedColor, setClickedColor] = useState("#ffffff");
   const [clickCount, setClickCount] = useState(0);
+  const [diffPer, setDiffPer] = useState(0);
 
   useEffect(() => {
     getPictureColors();
     getCanvasContext();
   }, []);
+
+  useEffect(() => {
+    // 色差の反映
+    const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
+    setDiffPer(colorDiff);
+  }, [questionColor, clickedColor]);
 
   useEffect(() => {
     if (context !== null) {
@@ -84,6 +91,8 @@ function App() {
       >
         <h1>いろおに</h1>
         {questionColor}
+        <br></br>
+        {diffPer}
         <Button
           variant="contained"
           color="primary"
