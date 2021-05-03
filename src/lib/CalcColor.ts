@@ -5,7 +5,7 @@ type ColorObj = {
 };
 
 export function rgbStrToObj(str: string): ColorObj {
-  // from text "rgb(4,8,16)" to obj { r: 4, g: 8, a:16 }
+  // from text "rgb(4,8,16)" to { r: 4, g: 8, a:16 }
   const result = /([0-9]{1,3}), *([0-9]{1,3}), *([0-9]{1,3})/i.exec(str);
   if (result === null) {
     throw new Error("不適な文字列です。");
@@ -23,16 +23,21 @@ export function hexToRgbObj(str: string): ColorObj {
 }
 
 export function hexToRgbStr(str: string) {
-  // from "rgb(12, 34, 255)" to "#1234ff"
+  // from "rgb(1, 34, 255)" to "#0134ff"
   const result = /([0-9]{1,3}), *([0-9]{1,3}), *([0-9]{1,3})/i.exec(str);
   if (result === null) {
     throw new Error("不適な文字列です。");
   }
   const obj = regExpToRgb(result);
-  const r = obj.r.toString(16);
-  const g = obj.g.toString(16);
-  const b = obj.b.toString(16);
+  const r = intToStr(obj.r);
+  const g = intToStr(obj.g);
+  const b = intToStr(obj.b);
   return `#${r}${g}${b}`;
+}
+
+function intToStr(color: number): string {
+  const num = color.toString(16);
+  return ("00" + num).slice(-2);
 }
 
 function regExpToRgb(result: RegExpExecArray, decimal = 10): ColorObj {
