@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { Container, Button } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import analyze from "rgbaster";
 import chroma from "chroma-js";
 import { hexToRgbStr } from "./lib/CalcColor";
+
+import Top from "./Top";
 
 function App() {
   type Color = {
@@ -102,18 +104,13 @@ function App() {
           alignItems: "center",
         }}
       >
-        <h1>いろおに</h1>
+        <h1>
+          <span>アルティメット</span>いろおに
+        </h1>
+        <Top clickStart={clickStart}></Top>
         {questionColor}
         <br></br>
         {diffPer}
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={clickStart}
-        >
-          いろいろなーにいろ？
-        </Button>
         <span
           style={{
             background: clickedColor,
