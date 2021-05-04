@@ -1,3 +1,5 @@
+import chroma from "chroma-js";
+
 type ColorObj = {
   r: number;
   g: number;
@@ -33,6 +35,12 @@ export const hexToRgbStr = (str: string) => {
   const g = intToStr(obj.g);
   const b = intToStr(obj.b);
   return `#${r}${g}${b}`;
+};
+
+export const textColor = (hex: string) => {
+  // from "#0134ff" to "#000000" or "#ffffff"
+  const colorDiff: number = chroma.distance(hex, "#000000");
+  return colorDiff < 60 ? "#ffffff" : "#000000";
 };
 
 const intToStr = (color: number) => {
