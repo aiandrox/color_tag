@@ -41,7 +41,15 @@ const App = () => {
     const color =
       pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
     setQuestionColor(hexToRgbStr(color));
-    setClickCount(0);
+    setType("game");
+  };
+
+  const mainArea = () => {
+    if (type === "top") {
+      return <Top clickStart={clickStart}></Top>;
+    } else {
+      return <Game questionColor={questionColor} picture={picture}></Game>;
+    }
   };
 
   return (
@@ -59,8 +67,7 @@ const App = () => {
         <h1>
           <span>アルティメット</span>いろおに
         </h1>
-        <Top clickStart={clickStart}></Top>
-        <Game questionColor={questionColor} picture={picture}></Game>
+        {mainArea()}
       </Container>
     </div>
   );
