@@ -11,7 +11,7 @@ type GameProps = {
 const Game = ({ questionColor, picture, clearGame }: GameProps) => {
   const [clickedColor, setClickedColor] = useState("#000000");
   const [clickCount, setClickCount] = useState(0);
-  const [diffPer, setDiffPer] = useState(100);
+  const [diffPer, setDiffPer] = useState(0);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
   useEffect(() => {
@@ -19,9 +19,7 @@ const Game = ({ questionColor, picture, clearGame }: GameProps) => {
   }, []);
 
   useEffect(() => {
-    // 色差の反映
-    const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
-    setDiffPer(colorDiff);
+    updateDiffPer();
   }, [clickedColor]);
 
   useEffect(() => {
@@ -55,8 +53,14 @@ const Game = ({ questionColor, picture, clearGame }: GameProps) => {
     setClickCount(clickCount + 1);
   };
 
+  const updateDiffPer = () => {
+    const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
+    const per: number = 100 - (Math.floor(colorDiff * 100) / 100);
+    setDiffPer(per);
+  };
+
   const checkColor = () => {
-    if (diffPer < 10) {
+    if (diffPer > 85) {
       // TODO: 2.3にする
       clearGame(clickedColor);
     }
@@ -80,9 +84,8 @@ const Game = ({ questionColor, picture, clearGame }: GameProps) => {
 
   return (
     <div>
-      {questionColor}
-      <br></br>
-      {diffPer}
+      <h1>{questionColor}</h1>
+      {diffPer}%
       <span
         style={{
           background: clickedColor,
