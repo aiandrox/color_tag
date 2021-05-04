@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "rebass";
 
 type TopProps = {
   clickStart: () => void;
@@ -10,12 +10,7 @@ const Top = (props: TopProps) => {
       <h1>
         <span>アルティメット</span>いろおに
       </h1>
-      <Button
-        variant="contained"
-        color="primary"
-        disableElevation
-        onClick={props.clickStart}
-      >
+      <Button backgroundColor="#000000" onClick={props.clickStart}>
         いろいろなーにいろ？
       </Button>
     </div>

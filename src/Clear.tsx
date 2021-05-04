@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "rebass";
 
 type ClearProps = {
   questionColor: string;
@@ -6,31 +6,26 @@ type ClearProps = {
   firstLoad: () => void;
 };
 
-const Clear = ({ questionColor, clearColor, firstLoad }: ClearProps) => {
+const Clear = (props: ClearProps) => {
   return (
     <div>
       <h1>Clear!!</h1>
       <span
         style={{
-          background: questionColor,
+          background: props.questionColor,
         }}
       >
-        {questionColor}
+        {props.questionColor}
       </span>
       　
       <span
         style={{
-          background: clearColor,
+          background: props.clearColor,
         }}
       >
-        {clearColor}
+        {props.clearColor}
       </span>
-      <Button
-        variant="contained"
-        color="primary"
-        disableElevation
-        onClick={firstLoad}
-      >
+      <Button backgroundColor="#000000" onClick={props.firstLoad}>
         トップに戻る
       </Button>
     </div>
