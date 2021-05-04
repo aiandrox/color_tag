@@ -9,11 +9,6 @@ type GameProps = {
   clearGame: (clearColor: ClearData) => void;
 };
 
-type ClearData = {
-  color: string;
-  per: number;
-};
-
 const Game = ({
   questionColor,
   picture,

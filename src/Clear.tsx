@@ -6,10 +6,6 @@ type ClearProps = {
   clearData: ClearData;
   firstLoad: () => void;
 };
-type ClearData = {
-  color: string;
-  per: number;
-};
 
 const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
   return (

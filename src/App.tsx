@@ -12,11 +12,6 @@ type AnalyzedColor = {
   count: number;
 };
 
-type ClearData = {
-  color: string;
-  per: number;
-};
-
 const App = () => {
   const [type, setType] = useState<string>("top");
   const [picture, setPicture] = useState<string>("images/cherry.jpg");
