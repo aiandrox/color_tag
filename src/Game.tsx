@@ -61,7 +61,7 @@ const Game = ({
 
   const updateDiffPer = () => {
     const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
-    const per: number = 100 - Math.floor(colorDiff * 100) / 100;
+    const per: number = Math.floor((100 - colorDiff) * 100) / 100;
     setDiffPer(per);
   };
 
