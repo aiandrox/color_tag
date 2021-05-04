@@ -6,6 +6,9 @@ type TopProps = {
 const Top = (props: TopProps) => {
   return (
     <div>
+      <h1>
+        <span>アルティメット</span>いろおに
+      </h1>
       <Button
         variant="contained"
         color="primary"

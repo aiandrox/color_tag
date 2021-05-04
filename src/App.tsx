@@ -16,7 +16,7 @@ const App = () => {
   const [type, setType] = useState<string>("top");
   const [picture, setPicture] = useState<string>("images/cherry.jpg");
   const [pictureColors, setPictureColors] = useState<Color[]>([]);
-  const [questionColor, setQuestionColor] = useState<string>("#ffffff");
+  const [questionColor, setQuestionColor] = useState<string>("");
   const [clearColor, setClearColor] = useState<string>("");
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const App = () => {
     setPictureColors(result.slice(0, 100));
   };
 
-  const clickStart = () => {
+  const startGame = () => {
     const color =
       pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
     setQuestionColor(hexToRgbStr(color));
@@ -55,12 +55,13 @@ const App = () => {
 
   const mainArea = () => {
     if (type === "top") {
-      return <Top clickStart={clickStart}></Top>;
+      return <Top clickStart={startGame}></Top>;
     } else if (type === "game") {
       return (
         <Game
           questionColor={questionColor}
           picture={picture}
+          changeColor={startGame}
           clearGame={clearGame}
         ></Game>
       );
@@ -83,9 +84,6 @@ const App = () => {
           alignItems: "center",
         }}
       >
-        <h1>
-          <span>アルティメット</span>いろおに
-        </h1>
         {mainArea()}
       </Container>
     </div>

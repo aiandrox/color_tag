@@ -5,11 +5,17 @@ import chroma from "chroma-js";
 type GameProps = {
   questionColor: string;
   picture: string;
+  changeColor: () => void;
   clearGame: (clearColor: string) => void;
 };
 
-const Game = ({ questionColor, picture, clearGame }: GameProps) => {
-  const [clickedColor, setClickedColor] = useState("#000000");
+const Game = ({
+  questionColor,
+  picture,
+  changeColor,
+  clearGame,
+}: GameProps) => {
+  const [clickedColor, setClickedColor] = useState("#ffffff");
   const [clickCount, setClickCount] = useState(0);
   const [diffPer, setDiffPer] = useState(0);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
@@ -55,7 +61,7 @@ const Game = ({ questionColor, picture, clearGame }: GameProps) => {
 
   const updateDiffPer = () => {
     const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
-    const per: number = 100 - (Math.floor(colorDiff * 100) / 100);
+    const per: number = 100 - Math.floor(colorDiff * 100) / 100;
     setDiffPer(per);
   };
 
@@ -94,6 +100,7 @@ const Game = ({ questionColor, picture, clearGame }: GameProps) => {
         {clickedColor} {clickCount}回間違えたよ
       </span>
       <div onClick={invertColor}>hogehoge</div>
+      <div onClick={changeColor}>色を変える</div>
       <canvas
         width="1000"
         height="667"
