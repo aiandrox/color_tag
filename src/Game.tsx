@@ -6,7 +6,12 @@ type GameProps = {
   questionColor: string;
   picture: string;
   changeColor: () => void;
-  clearGame: (clearColor: string) => void;
+  clearGame: (clearColor: ClearData) => void;
+};
+
+type ClearData = {
+  color: string;
+  per: number;
 };
 
 const Game = ({
@@ -69,7 +74,8 @@ const Game = ({
   const checkColor = () => {
     if (diffPer > 85) {
       // TODO: 2.3にする
-      clearGame(clickedColor!);
+      const clearData: ClearData = { color: clickedColor!, per: diffPer };
+      clearGame(clearData);
     }
   };
 

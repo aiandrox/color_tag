@@ -7,17 +7,22 @@ import Top from "./Top";
 import Game from "./Game";
 import Clear from "./Clear";
 
-type Color = {
+type AnalyzedColor = {
   color: string;
   count: number;
+};
+
+type ClearData = {
+  color: string;
+  per: number;
 };
 
 const App = () => {
   const [type, setType] = useState<string>("top");
   const [picture, setPicture] = useState<string>("images/cherry.jpg");
-  const [pictureColors, setPictureColors] = useState<Color[]>([]);
+  const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("");
-  const [clearColor, setClearColor] = useState<string>("");
+  const [clearData, setClearData] = useState<ClearData>();
 
   useEffect(() => {
     firstLoad();
@@ -53,10 +58,8 @@ const App = () => {
     setType("game");
   };
 
-  const clearGame = (clearColor: string) => {
-    console.log(questionColor);
-    console.log(clearColor);
-    setClearColor(clearColor);
+  const clearGame = (clearData: ClearData) => {
+    setClearData(clearData);
     setType("clear");
   };
 
@@ -76,7 +79,7 @@ const App = () => {
       return (
         <Clear
           questionColor={questionColor}
-          clearColor={clearColor}
+          clearData={clearData!}
           firstLoad={firstLoad}
         ></Clear>
       );

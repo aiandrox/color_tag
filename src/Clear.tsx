@@ -3,11 +3,15 @@ import { textColor } from "./lib/CalcColor";
 
 type ClearProps = {
   questionColor: string;
-  clearColor: string;
+  clearData: ClearData;
   firstLoad: () => void;
 };
+type ClearData = {
+  color: string;
+  per: number;
+};
 
-const Clear = (props: ClearProps) => {
+const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
   return (
     <div>
       <h1>Clear!!</h1>
@@ -15,22 +19,22 @@ const Clear = (props: ClearProps) => {
         <Box
           width={1 / 2}
           px={2}
-          backgroundColor={props.questionColor}
-          color={textColor(props.questionColor)}
+          backgroundColor={questionColor}
+          color={textColor(questionColor)}
         >
-          <Text p={1}>{props.questionColor}</Text>
+          <Text p={1}>{questionColor}</Text>
         </Box>
         <Box
           width={1 / 2}
           px={2}
-          backgroundColor={props.clearColor}
-          color={textColor(props.clearColor)}
+          backgroundColor={clearData.color}
+          color={textColor(clearData.color)}
         >
-          <Text p={1}>{props.clearColor}</Text>
+          <Text p={1}>{clearData.color}</Text>
         </Box>
       </Flex>
-
-      <Button backgroundColor="#000000" onClick={props.firstLoad}>
+      {clearData.per}%
+      <Button backgroundColor="#000000" onClick={firstLoad}>
         トップに戻る
       </Button>
     </div>
