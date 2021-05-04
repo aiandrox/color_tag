@@ -50,6 +50,22 @@ const Game = ({ questionColor, picture }: GameProps) => {
     setClickCount(clickCount + 1);
   };
 
+  const invertColor = () => {
+    const imageData = context!.getImageData(
+      0,
+      0,
+      context!.canvas.width,
+      context!.canvas.height
+    );
+    const d = imageData.data;
+    for (var i = 0; i < d.length; i += 4) {
+      d[i] = 255 - d[i];
+      d[i + 1] = 255 - d[i + 1];
+      d[i + 2] = 255 - d[i + 2];
+    }
+    context!.putImageData(imageData, 0, 0);
+  };
+
   return (
     <div>
       {questionColor}
@@ -62,6 +78,7 @@ const Game = ({ questionColor, picture }: GameProps) => {
       >
         {clickedColor} {clickCount}回間違えたよ
       </span>
+      <div onClick={invertColor}>hogehoge</div>
       <canvas
         width="1000"
         height="667"
