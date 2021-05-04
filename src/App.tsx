@@ -5,6 +5,7 @@ import { hexToRgbStr } from "./lib/CalcColor";
 
 import Top from "./Top";
 import Game from "./Game";
+import Clear from "./Clear";
 
 type Color = {
   color: string;
@@ -16,6 +17,7 @@ const App = () => {
   const [picture, setPicture] = useState<string>("images/cherry.jpg");
   const [pictureColors, setPictureColors] = useState<Color[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("#ffffff");
+  const [clearColor, setClearColor] = useState<string>("");
 
   useEffect(() => {
     getPictureColors();
@@ -44,11 +46,28 @@ const App = () => {
     setType("game");
   };
 
+  const clearGame = (clearColor: string) => {
+    console.log(questionColor);
+    console.log(clearColor);
+    setClearColor(clearColor);
+    setType("clear");
+  };
+
   const mainArea = () => {
     if (type === "top") {
       return <Top clickStart={clickStart}></Top>;
+    } else if (type === "game") {
+      return (
+        <Game
+          questionColor={questionColor}
+          picture={picture}
+          clearGame={clearGame}
+        ></Game>
+      );
     } else {
-      return <Game questionColor={questionColor} picture={picture}></Game>;
+      return (
+        <Clear questionColor={questionColor} clearColor={clearColor}></Clear>
+      );
     }
   };
 

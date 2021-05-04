@@ -5,12 +5,13 @@ import chroma from "chroma-js";
 type GameProps = {
   questionColor: string;
   picture: string;
+  clearGame: (clearColor: string) => void;
 };
 
-const Game = ({ questionColor, picture }: GameProps) => {
-  const [clickedColor, setClickedColor] = useState("#ffffff");
+const Game = ({ questionColor, picture, clearGame }: GameProps) => {
+  const [clickedColor, setClickedColor] = useState("#000000");
   const [clickCount, setClickCount] = useState(0);
-  const [diffPer, setDiffPer] = useState(0);
+  const [diffPer, setDiffPer] = useState(100);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
   useEffect(() => {
@@ -21,7 +22,11 @@ const Game = ({ questionColor, picture }: GameProps) => {
     // 色差の反映
     const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
     setDiffPer(colorDiff);
-  }, [questionColor, clickedColor]);
+  }, [clickedColor]);
+
+  useEffect(() => {
+    checkColor();
+  }, [diffPer]);
 
   useEffect(() => {
     if (context !== null) {
@@ -48,6 +53,13 @@ const Game = ({ questionColor, picture }: GameProps) => {
     const colorString = `rgb(${pointColorData[0]}, ${pointColorData[1]}, ${pointColorData[2]})`;
     setClickedColor(hexToRgbStr(colorString));
     setClickCount(clickCount + 1);
+  };
+
+  const checkColor = () => {
+    if (diffPer < 10) {
+      // TODO: 2.3にする
+      clearGame(clickedColor);
+    }
   };
 
   const invertColor = () => {
