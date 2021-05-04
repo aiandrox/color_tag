@@ -15,7 +15,7 @@ const Game = ({
   changeColor,
   clearGame,
 }: GameProps) => {
-  const [clickedColor, setClickedColor] = useState("#ffffff");
+  const [clickedColor, setClickedColor] = useState<string>();
   const [clickCount, setClickCount] = useState(0);
   const [diffPer, setDiffPer] = useState(0);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
@@ -25,6 +25,7 @@ const Game = ({
   }, []);
 
   useEffect(() => {
+    if (clickedColor === undefined) return;
     updateDiffPer();
   }, [clickedColor]);
 
@@ -68,7 +69,7 @@ const Game = ({
   const checkColor = () => {
     if (diffPer > 85) {
       // TODO: 2.3にする
-      clearGame(clickedColor);
+      clearGame(clickedColor!);
     }
   };
 
