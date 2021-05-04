@@ -20,9 +20,16 @@ const App = () => {
   const [clearColor, setClearColor] = useState<string>("");
 
   useEffect(() => {
-    getPictureColors();
-    selectPicture();
+    firstLoad();
   }, []);
+
+  useEffect(() => {
+    getPictureColors();
+  }, [picture]);
+  const firstLoad = () => {
+    selectPicture();
+    setType("top");
+  };
 
   const selectPicture = () => {
     const pictures = [
@@ -67,7 +74,11 @@ const App = () => {
       );
     } else {
       return (
-        <Clear questionColor={questionColor} clearColor={clearColor}></Clear>
+        <Clear
+          questionColor={questionColor}
+          clearColor={clearColor}
+          firstLoad={firstLoad}
+        ></Clear>
       );
     }
   };

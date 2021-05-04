@@ -1,19 +1,15 @@
-import { useState, useEffect } from "react";
+import { Button } from "@material-ui/core";
 
 type ClearProps = {
   questionColor: string;
   clearColor: string;
+  firstLoad: () => void;
 };
 
-const Clear = ({ questionColor, clearColor }: ClearProps) => {
-  // const [clickedColor, setClickedColor] = useState("#000000");
-  // const [clickCount, setClickCount] = useState(0);
-  // const [diffPer, setDiffPer] = useState(100);
-  // const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-
+const Clear = ({ questionColor, clearColor, firstLoad }: ClearProps) => {
   return (
     <div>
-      <div>Clear!!</div>
+      <h1>Clear!!</h1>
       <span
         style={{
           background: questionColor,
@@ -29,6 +25,14 @@ const Clear = ({ questionColor, clearColor }: ClearProps) => {
       >
         {clearColor}
       </span>
+      <Button
+        variant="contained"
+        color="primary"
+        disableElevation
+        onClick={firstLoad}
+      >
+        トップに戻る
+      </Button>
     </div>
   );
 };
