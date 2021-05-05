@@ -1,4 +1,5 @@
-import { Button, Text } from "rebass";
+import { Text } from "rebass";
+import Button from "./components/Button";
 
 type TopProps = {
   clickStart: () => void;
@@ -27,13 +28,7 @@ const Top = (props: TopProps) => {
           いろおに
         </Text>
       </h1>
-      <Button
-        backgroundColor="#ffc240"
-        onClick={props.clickStart}
-        style={{ cursor: "pointer" }}
-      >
-        いろいろなーにいろ？
-      </Button>
+      <Button onClick={props.clickStart}>いろいろなーにいろ？</Button>
     </div>
   );
 };

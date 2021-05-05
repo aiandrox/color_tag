@@ -1,5 +1,6 @@
-import { Flex, Box, Text, Button } from "rebass";
+import { Flex, Box, Text } from "rebass";
 import { textColor } from "./lib/CalcColor";
+import Button from "./components/Button";
 
 type ClearProps = {
   questionColor: string;
@@ -39,13 +40,7 @@ const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
         </Box>
       </Flex>
 
-      <Button
-        backgroundColor="#000000"
-        style={{ cursor: "pointer" }}
-        onClick={firstLoad}
-      >
-        トップに戻る
-      </Button>
+      <Button onClick={firstLoad}>トップに戻る</Button>
     </div>
   );
 };

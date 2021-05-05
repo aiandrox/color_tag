@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Box, Text, Button } from "rebass";
+import { Box, Text } from "rebass";
+import Button from "./components/Button";
 import { hexToRgbStr, textColor } from "./lib/CalcColor";
 import chroma from "chroma-js";
 
@@ -122,13 +123,7 @@ const Game = ({
         id="canvas"
         onClick={clickCanvasArea}
       ></canvas>
-      <Button
-        backgroundColor="#000000"
-        style={{ cursor: "pointer" }}
-        onClick={changeColor}
-      >
-        色を変える
-      </Button>
+      <Button onClick={changeColor}>色を変える</Button>
     </div>
   );
 };
