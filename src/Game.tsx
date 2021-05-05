@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { hexToRgbStr } from "./lib/CalcColor";
+import { Box, Text, Button } from "rebass";
+import { hexToRgbStr, textColor } from "./lib/CalcColor";
 import chroma from "chroma-js";
 
 type GameProps = {
@@ -69,7 +70,11 @@ const Game = ({
   const checkColor = () => {
     if (diffPer > 85) {
       // TODO: 2.3にする
-      const clearData: ClearData = { color: clickedColor!, per: diffPer };
+      const clearData: ClearData = {
+        color: clickedColor!,
+        count: clickCount,
+        per: diffPer,
+      };
       clearGame(clearData);
     }
   };
@@ -99,16 +104,31 @@ const Game = ({
           background: clickedColor,
         }}
       >
+        <Box>
+          <Text
+            height={50}
+            width={50}
+            color={textColor(clickedColor ? clickedColor : "#ffffff")}
+            bg={clickedColor}
+          >
+            {clickedColor}
+          </Text>
+        </Box>
         {clickedColor} {clickCount}回間違えたよ
       </span>
-      <div onClick={invertColor}>hogehoge</div>
-      <div onClick={changeColor}>色を変える</div>
       <canvas
         width="1000"
         height="667"
         id="canvas"
         onClick={clickCanvasArea}
       ></canvas>
+      <Button
+        backgroundColor="#000000"
+        style={{ cursor: "pointer" }}
+        onClick={changeColor}
+      >
+        色を変える
+      </Button>
     </div>
   );
 };
