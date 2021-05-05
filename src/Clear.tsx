@@ -14,28 +14,26 @@ const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
       <h1>{clearData.count}回でClear!!</h1>
       <Box>{clearData.per}%</Box>
       <Box height="5rem">
-        <Grid container>
-          <Grid container justify="center">
-            <Box
-              width="5rem"
-              height="5rem"
-              p="2px"
-              color={textColor(questionColor)}
-              bgcolor={questionColor}
-            >
-              {questionColor}
-            </Box>
-            <Box width="1rem"></Box>
-            <Box
-              width="5rem"
-              height="5rem"
-              p="2px"
-              color={textColor(clearData.color)}
-              bgcolor={clearData.color}
-            >
-              {clearData.color}
-            </Box>
-          </Grid>
+        <Grid container justify="center">
+          <Box
+            width="5rem"
+            height="5rem"
+            p="2px"
+            color={textColor(questionColor)}
+            bgcolor={questionColor}
+          >
+            <Box justifyContent="center">{questionColor}</Box>
+          </Box>
+          <Box width="1rem"></Box>
+          <Box
+            width="5rem"
+            height="5rem"
+            p="2px"
+            color={textColor(clearData.color)}
+            bgcolor={clearData.color}
+          >
+            {clearData.color}
+          </Box>
         </Grid>
       </Box>
       <Button onClick={firstLoad}>トップに戻る</Button>

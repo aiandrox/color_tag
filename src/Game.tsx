@@ -112,15 +112,14 @@ const Game = ({
           background: clickedColor,
         }}
       >
-        <Box>
-          <Box
-            height={50}
-            width={50}
-            color={textColor(clickedColor ? clickedColor : "#ffffff")}
-            bgcolor={clickedColor}
-          >
-            {clickedColor}
-          </Box>
+        <Box
+          height={50}
+          width={50}
+          color={textColor(clickedColor ? clickedColor : "#ffffff")}
+          bgcolor={clickedColor}
+          justifyContent="center"
+        >
+          <Box>{clickedColor}</Box>
         </Box>
         {clickedColor} {clickCount}回間違えたよ
       </span>
