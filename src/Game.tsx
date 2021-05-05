@@ -40,6 +40,8 @@ const Game = ({
       const img = new Image();
       img.src = picture;
       img.onload = () => {
+        const scale = context!.canvas.width / img.width;
+        context.setTransform(scale, 0, 0, scale, 0, 0);
         context.drawImage(img, 0, 0);
       };
     }
@@ -47,7 +49,12 @@ const Game = ({
 
   // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
   const getCanvasContext = () => {
+    const container = document.getElementById(
+      "canvas-container"
+    ) as HTMLCanvasElement;
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
     const canvasContext = canvas.getContext("2d");
     setContext(canvasContext);
   };
@@ -69,7 +76,7 @@ const Game = ({
   };
 
   const checkColor = () => {
-    if (diffPer > 85) {
+    if (diffPer > 99) {
       // TODO: 2.3にする
       const clearData: ClearData = {
         color: clickedColor!,
@@ -117,12 +124,27 @@ const Game = ({
         </Box>
         {clickedColor} {clickCount}回間違えたよ
       </span>
-      <canvas
-        width="1000"
-        height="667"
-        id="canvas"
-        onClick={clickCanvasArea}
-      ></canvas>
+      <div
+        id="canvas-container"
+        style={{
+          position: "relative",
+          height: 0,
+          overflow: "hidden",
+          paddingTop: "56.25%",
+        }}
+      >
+        <canvas
+          id="canvas"
+          onClick={clickCanvasArea}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        ></canvas>
+      </div>
       <Button onClick={changeColor}>色を変える</Button>
     </div>
   );
