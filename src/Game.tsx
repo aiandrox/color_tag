@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Text } from "rebass";
+import { Box } from "@material-ui/core";
 import Button from "./components/Button";
 import { hexToRgbStr, textColor } from "./lib/CalcColor";
 import chroma from "chroma-js";
@@ -106,14 +106,14 @@ const Game = ({
         }}
       >
         <Box>
-          <Text
+          <Box
             height={50}
             width={50}
             color={textColor(clickedColor ? clickedColor : "#ffffff")}
-            bg={clickedColor}
+            bgcolor={clickedColor}
           >
             {clickedColor}
-          </Text>
+          </Box>
         </Box>
         {clickedColor} {clickCount}回間違えたよ
       </span>

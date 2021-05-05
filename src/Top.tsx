@@ -8,6 +8,7 @@ type TopProps = {
 const Top = (props: TopProps) => {
   const IrooniStyle = {
     color: "#FF00A1",
+    fontSize: "5rem",
     background: "-webkit-linear-gradient(-90deg, #FF00A1, #F6FF00)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
@@ -17,16 +18,16 @@ const Top = (props: TopProps) => {
   return (
     <div>
       <h1>
-        <Text
-          fontSize={8}
-          color="#63009c"
-          style={{ fontFamily: "'Reggae One', cursive" }}
+        <div
+          style={{
+            color: "#63009c",
+            fontSize: "4rem",
+            fontFamily: "'Reggae One', cursive",
+          }}
         >
           アルティメット
-        </Text>
-        <Text fontSize={8} style={IrooniStyle}>
-          いろおに
-        </Text>
+        </div>
+        <div style={IrooniStyle}>いろおに</div>
       </h1>
       <Button onClick={props.clickStart}>いろいろなーにいろ？</Button>
     </div>

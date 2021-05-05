@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box } from "rebass";
+import { Container, Box } from "@material-ui/core";
 import analyze from "rgbaster";
 import { hexToRgbStr } from "./lib/CalcColor";
 
@@ -83,16 +83,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <Box
-        sx={{
-          maxWidth: 1000,
-          mx: "auto",
-          textAlign: "center",
-          px: 3,
-        }}
-      >
-        {mainArea()}
-      </Box>
+      <Container maxWidth="md">
+        <Box textAlign="center">{mainArea()}</Box>
+      </Container>
     </div>
   );
 };

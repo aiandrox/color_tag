@@ -1,4 +1,4 @@
-import { Flex, Box, Text } from "rebass";
+import { Box, Grid } from "@material-ui/core";
 import { textColor } from "./lib/CalcColor";
 import Button from "./components/Button";
 
@@ -12,34 +12,32 @@ const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
   return (
     <div>
       <h1>{clearData.count}回でClear!!</h1>
-      <Flex alignItems="center" flexWrap="wrap" mx={-2}>
-        <Box p={2}>
-          <Text
-            p={2}
-            height={100}
-            width={100}
-            color={textColor(questionColor)}
-            bg={questionColor}
-          >
-            {questionColor}
-          </Text>
-        </Box>
-        <Box>
-          <Text>一致度{clearData.per}%</Text>
-        </Box>
-        <Box p={2}>
-          <Text
-            p={2}
-            height={100}
-            width={100}
-            color={textColor(clearData.color)}
-            bg={clearData.color}
-          >
-            {clearData.color}
-          </Text>
-        </Box>
-      </Flex>
-
+      <Box>{clearData.per}%</Box>
+      <Box height="5rem">
+        <Grid container>
+          <Grid container justify="center">
+            <Box
+              width="5rem"
+              height="5rem"
+              p="2px"
+              color={textColor(questionColor)}
+              bgcolor={questionColor}
+            >
+              {questionColor}
+            </Box>
+            <Box width="1rem"></Box>
+            <Box
+              width="5rem"
+              height="5rem"
+              p="2px"
+              color={textColor(clearData.color)}
+              bgcolor={clearData.color}
+            >
+              {clearData.color}
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
       <Button onClick={firstLoad}>トップに戻る</Button>
     </div>
   );
