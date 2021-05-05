@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box } from "@material-ui/core";
 import Button from "./components/Button";
+import ColorBox from "./components/ColorBox";
 import { hexToRgbStr, textColor } from "./lib/CalcColor";
 import chroma from "chroma-js";
 
@@ -76,7 +77,7 @@ const Game = ({
   };
 
   const checkColor = () => {
-    if (diffPer > 99) {
+    if (diffPer > 85) {
       // TODO: 2.3にする
       const clearData: ClearData = {
         color: clickedColor!,
@@ -112,15 +113,7 @@ const Game = ({
           background: clickedColor,
         }}
       >
-        <Box
-          height={50}
-          width={50}
-          color={textColor(clickedColor ? clickedColor : "#ffffff")}
-          bgcolor={clickedColor}
-          justifyContent="center"
-        >
-          <Box>{clickedColor}</Box>
-        </Box>
+        <ColorBox color={clickedColor}></ColorBox>
         {clickedColor} {clickCount}回間違えたよ
       </span>
       <div
