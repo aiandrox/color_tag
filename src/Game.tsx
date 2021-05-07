@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import { Box } from "@material-ui/core";
 import Button from "./components/Button";
 import ColorBox from "./components/ColorBox";
-import { hexToRgbStr, textColor } from "./lib/CalcColor";
+import { hexToRgbStr } from "./lib/CalcColor";
 import chroma from "chroma-js";
 
 type GameProps = {
   questionColor: string;
   picture: string;
+  type: string;
+  setType: (type: string) => void;
   changeColor: () => void;
   clearGame: (clearColor: ClearData) => void;
 };
@@ -15,6 +16,8 @@ type GameProps = {
 const Game = ({
   questionColor,
   picture,
+  type,
+  setType,
   changeColor,
   clearGame,
 }: GameProps) => {
@@ -61,6 +64,8 @@ const Game = ({
   };
 
   const clickCanvasArea = (evt: any) => {
+    if (type === "gameOver") return;
+
     const x: number = parseInt(evt.nativeEvent.offsetX);
     const y: number = parseInt(evt.nativeEvent.offsetY);
     const pointColorData: Uint8ClampedArray = context!.getImageData(x, y, 1, 1)
@@ -71,13 +76,14 @@ const Game = ({
   };
 
   const updateDiffPer = () => {
+    // 最大値161.37
     const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
     const per: number = Math.floor((100 - colorDiff) * 100) / 100;
     setDiffPer(per);
   };
 
   const checkColor = () => {
-    if (diffPer > 85) {
+    if (diffPer > 90) {
       // TODO: 2.3にする
       const clearData: ClearData = {
         color: clickedColor!,
@@ -85,6 +91,15 @@ const Game = ({
         per: diffPer,
       };
       clearGame(clearData);
+    } else {
+      checkGameOver();
+    }
+  };
+
+  const checkGameOver = () => {
+    if (clickCount > 100) {
+      invertColor();
+      setType("gameOver");
     }
   };
 
@@ -114,7 +129,7 @@ const Game = ({
         }}
       >
         <ColorBox color={clickedColor}></ColorBox>
-        {clickedColor} {clickCount}回間違えたよ
+        {clickCount}回間違えたよ
       </span>
       <div
         id="canvas-container"
@@ -137,7 +152,9 @@ const Game = ({
           }}
         ></canvas>
       </div>
-      <Button onClick={changeColor}>色を変える</Button>
+      <Button onClick={type == "game" ? changeColor : () => {}}>
+        色を変える
+      </Button>
     </div>
   );
 };

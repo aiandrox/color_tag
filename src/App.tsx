@@ -61,16 +61,18 @@ const App = () => {
   const mainArea = () => {
     if (type === "top") {
       return <Top clickStart={startGame}></Top>;
-    } else if (type === "game") {
+    } else if (type === "game" || type === "gameOver") {
       return (
         <Game
           questionColor={questionColor}
           picture={picture}
           changeColor={startGame}
+          type={type}
+          setType={setType}
           clearGame={clearGame}
         ></Game>
       );
-    } else {
+    } else if (type === "clear") {
       return (
         <Clear
           questionColor={questionColor}
