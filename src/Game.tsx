@@ -32,6 +32,10 @@ const Game = ({
   }, []);
 
   useEffect(() => {
+    checkGameOver();
+  }, [clickCount]);
+
+  useEffect(() => {
     if (clickedColor === undefined) return;
     updateDiffPer();
   }, [clickedColor]);
@@ -91,14 +95,14 @@ const Game = ({
         per: diffPer,
       };
       clearGame(clearData);
-    } else {
-      checkGameOver();
     }
   };
 
   const checkGameOver = () => {
-    if (clickCount > 100) {
+    if (clickCount >= 10) {
       invertColor();
+      document.body.style.backgroundColor = "#000000";
+      document.body.style.color = "#ffffff";
       setType("gameOver");
     }
   };
@@ -119,9 +123,19 @@ const Game = ({
     context!.putImageData(imageData, 0, 0);
   };
 
+  const title = () => {
+    return type === "game" ? (
+      <h1>{questionColor}</h1>
+    ) : (
+      <h1 style={{ fontSize: "3rem", fontFamily: "'New Tegomin', serif" }}>
+        つかまえた
+      </h1>
+    );
+  };
+
   return (
     <div>
-      <h1>{questionColor}</h1>
+      {title()}
       <Box height="5rem" m="1rem">
         <Grid container justify="center">
           <ColorBox color={clickedColor}></ColorBox>
