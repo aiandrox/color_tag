@@ -7,7 +7,12 @@ type ButtonProps = {
 
 const Button = (props: ButtonProps) => {
   return (
-    <MaterialButton variant="outlined" color="primary" onClick={props.onClick}>
+    <MaterialButton
+      variant="outlined"
+      color="primary"
+      size="large"
+      onClick={props.onClick}
+    >
       {props.children}
     </MaterialButton>
   );

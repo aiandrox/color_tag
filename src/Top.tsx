@@ -1,4 +1,3 @@
-import { Text } from "rebass";
 import Button from "./components/Button";
 
 type TopProps = {
