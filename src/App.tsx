@@ -5,6 +5,7 @@ import { hexToRgbStr } from "./lib/CalcColor";
 
 import Top from "./Top";
 import Game from "./Game";
+import GameOver from "./GameOver";
 import Clear from "./Clear";
 import Canvas from "./Canvas";
 
@@ -83,23 +84,32 @@ const App = () => {
   const mainArea = () => {
     if (type === "top") {
       return <Top clickStart={startGame}></Top>;
-    } else if (type === "game" || type === "gameOver") {
+    } else if (type === "game") {
       return (
-        <div>
-          <Game
-            questionColor={questionColor}
-            clickedColor={clickedColor}
-            changeColor={startGame}
-            type={type}
-            clearGame={clearGame}
-            gameOver={gameOver}
-          ></Game>
+        <Game
+          questionColor={questionColor}
+          clickedColor={clickedColor}
+          changeColor={startGame}
+          type={type}
+          clearGame={clearGame}
+          gameOver={gameOver}
+        >
           <Canvas
             ref={canvas}
             picture={picture}
             clickColor={clickColor}
           ></Canvas>
-        </div>
+        </Game>
+      );
+    } else if (type === "gameOver") {
+      return (
+        <GameOver>
+          <Canvas
+            ref={canvas}
+            picture={picture}
+            clickColor={clickColor}
+          ></Canvas>
+        </GameOver>
       );
     } else if (type === "clear") {
       return (

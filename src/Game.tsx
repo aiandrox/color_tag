@@ -11,6 +11,7 @@ type GameProps = {
   changeColor: () => void;
   clearGame: (clearColor: ClearData) => void;
   gameOver: () => void;
+  children: JSX.Element;
 };
 
 const Game = ({
@@ -20,6 +21,7 @@ const Game = ({
   changeColor,
   clearGame,
   gameOver,
+  children,
 }: GameProps) => {
   const [clickCount, setClickCount] = useState(-1);
   const [diffPer, setDiffPer] = useState(0);
@@ -62,22 +64,9 @@ const Game = ({
     }
   };
 
-  const title = () => {
-    return type === "game" ? (
-      <div>
-        <h1>{questionColor}</h1>
-        <Button onClick={changeColor}>色を変える</Button>
-      </div>
-    ) : (
-      <h1 style={{ fontSize: "3rem", fontFamily: "'New Tegomin', serif" }}>
-        つかまえた
-      </h1>
-    );
-  };
-
   return (
     <div>
-      {title()}
+      <h1>{questionColor}</h1>
       <Box height="5rem" m="1rem">
         <Grid container justify="center">
           <ColorBox color={clickedColor}></ColorBox>
@@ -88,7 +77,9 @@ const Game = ({
           </Box>
         </Grid>
       </Box>
-      {clickCount}回<Box padding={1}></Box>
+      {clickCount}回{children}
+      <Box padding={1}></Box>
+      <Button onClick={changeColor}>色を変える</Button>
     </div>
   );
 };
