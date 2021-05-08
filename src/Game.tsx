@@ -7,7 +7,6 @@ import ColorBox from "./components/ColorBox";
 type GameProps = {
   questionColor: string;
   clickedColor: string | undefined;
-  type: string;
   changeColor: () => void;
   clearGame: (clearColor: ClearData) => void;
   gameOver: () => void;
@@ -17,7 +16,6 @@ type GameProps = {
 const Game = ({
   questionColor,
   clickedColor,
-  type,
   changeColor,
   clearGame,
   gameOver,
@@ -47,7 +45,7 @@ const Game = ({
   };
 
   const checkColor = () => {
-    if (diffPer > 98) {
+    if (diffPer > 90) {
       // TODO: 2.3にする
       const clearData: ClearData = {
         color: clickedColor!,
@@ -59,7 +57,7 @@ const Game = ({
   };
 
   const checkGameOver = () => {
-    if (clickCount >= 10) {
+    if (clickCount >= 20) {
       gameOver();
     }
   };

@@ -16,6 +16,7 @@ type AnalyzedColor = {
 
 const App = () => {
   const [type, setType] = useState<string>("top");
+  const [pictureLoaded, setPictureLoaded] = useState(false);
   const [picture, setPicture] = useState<string>("images/cherry.jpg");
   const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("");
@@ -37,6 +38,7 @@ const App = () => {
     document.body.style.color = "#333333";
     selectPicture();
     setType("top");
+    setClickedColor(undefined);
   };
 
   const selectPicture = () => {
@@ -90,25 +92,16 @@ const App = () => {
           questionColor={questionColor}
           clickedColor={clickedColor}
           changeColor={startGame}
-          type={type}
           clearGame={clearGame}
           gameOver={gameOver}
         >
-          <Canvas
-            ref={canvas}
-            picture={picture}
-            clickColor={clickColor}
-          ></Canvas>
+          <Canvas picture={picture} clickColor={clickColor}></Canvas>
         </Game>
       );
     } else if (type === "gameOver") {
       return (
-        <GameOver>
-          <Canvas
-            ref={canvas}
-            picture={picture}
-            clickColor={clickColor}
-          ></Canvas>
+        <GameOver firstLoad={firstLoad}>
+          <Canvas picture={picture} clickColor={clickColor}></Canvas>
         </GameOver>
       );
     } else if (type === "clear") {

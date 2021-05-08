@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { hexToRgbStr } from "./lib/CalcColor";
 
 type CanvasProps = {
-  ref: React.RefObject<HTMLElement>;
   picture: string;
   clickColor: (clickedColor: string) => void;
 };
 
-const Canvas = (props: CanvasProps, ref: React.RefObject<HTMLElement>) => {
+const Canvas = (props: CanvasProps) => {
   // useImperativeHandle(ref, () => {
   //   return {
   //     invertPictureColor() {
