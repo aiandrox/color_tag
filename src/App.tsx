@@ -33,8 +33,10 @@ const App = () => {
 
   const selectPicture = () => {
     const pictures = [
+      "images/bibury.jpg",
       "images/cherry.jpg",
-      "images/nemophila.jpg",
+      "images/flags.jpg",
+      "images/flowers.jpg",
       "images/leaves.jpg",
     ];
     const picture = pictures[Math.floor(Math.random() * pictures.length)];
