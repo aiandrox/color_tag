@@ -2,30 +2,12 @@ import { useState, useEffect } from "react";
 import { hexToRgbStr } from "./lib/CalcColor";
 
 type CanvasProps = {
+  type: string;
   picture: string;
   clickColor: (clickedColor: string) => void;
 };
 
 const Canvas = (props: CanvasProps) => {
-  // useImperativeHandle(ref, () => {
-  //   return {
-  //     invertPictureColor() {
-  //       const imageData = context!.getImageData(
-  //         0,
-  //         0,
-  //         context!.canvas.width,
-  //         context!.canvas.height
-  //       );
-  //       const d = imageData.data;
-  //       for (var i = 0; i < d.length; i += 4) {
-  //         d[i] = 255 - d[i];
-  //         d[i + 1] = 255 - d[i + 1];
-  //         d[i + 2] = 255 - d[i + 2];
-  //       }
-  //       context!.putImageData(imageData, 0, 0);
-  //     },
-  //   };
-  // });
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
   useEffect(() => {
@@ -40,6 +22,19 @@ const Canvas = (props: CanvasProps) => {
         const scale = context!.canvas.width / img.width;
         context.setTransform(scale, 0, 0, scale, 0, 0);
         context.drawImage(img, 0, 0);
+      };
+    }
+  }, [context, props.picture]);
+
+  useEffect(() => {
+    if (context !== null) {
+      const img = new Image();
+      img.src = props.picture;
+      img.onload = () => {
+        const scale = context!.canvas.width / img.width;
+        context.setTransform(scale, 0, 0, scale, 0, 0);
+        context.drawImage(img, 0, 0);
+        if (props.type === "gameOver") invertPictureColor();
       };
     }
   }, [context, props.picture]);
@@ -63,6 +58,22 @@ const Canvas = (props: CanvasProps) => {
       .data;
     const colorString = `rgb(${pointColorData[0]}, ${pointColorData[1]}, ${pointColorData[2]})`;
     props.clickColor(hexToRgbStr(colorString));
+  };
+
+  const invertPictureColor = () => {
+    const imageData = context!.getImageData(
+      0,
+      0,
+      context!.canvas.width,
+      context!.canvas.height
+    );
+    const d = imageData.data;
+    for (var i = 0; i < d.length; i += 4) {
+      d[i] = 255 - d[i];
+      d[i + 1] = 255 - d[i + 1];
+      d[i + 2] = 255 - d[i + 2];
+    }
+    context!.putImageData(imageData, 0, 0);
   };
 
   return (

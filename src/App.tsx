@@ -77,7 +77,6 @@ const App = () => {
   };
 
   const gameOver = () => {
-    // canvas.current?.invertPictureColor();
     setType("gameOver");
     document.body.style.backgroundColor = "#000000";
     document.body.style.color = "#ffffff";
@@ -95,13 +94,21 @@ const App = () => {
           clearGame={clearGame}
           gameOver={gameOver}
         >
-          <Canvas picture={picture} clickColor={clickColor}></Canvas>
+          <Canvas
+            type={type}
+            picture={picture}
+            clickColor={clickColor}
+          ></Canvas>
         </Game>
       );
     } else if (type === "gameOver") {
       return (
         <GameOver firstLoad={firstLoad}>
-          <Canvas picture={picture} clickColor={clickColor}></Canvas>
+          <Canvas
+            type={type}
+            picture={picture}
+            clickColor={clickColor}
+          ></Canvas>
         </GameOver>
       );
     } else if (type === "clear") {

@@ -1,8 +1,5 @@
-import { useState, useEffect } from "react";
-import chroma from "chroma-js";
-import { Box, Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import Button from "./components/Button";
-import ColorBox from "./components/ColorBox";
 
 type GameOverProps = {
   firstLoad: () => void;
