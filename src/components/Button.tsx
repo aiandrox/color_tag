@@ -12,6 +12,7 @@ const Button = (props: ButtonProps) => {
       color="primary"
       size="large"
       onClick={props.onClick}
+      style={{ textTransform: "none" }}
     >
       {props.children}
     </MaterialButton>
