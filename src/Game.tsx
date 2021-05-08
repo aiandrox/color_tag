@@ -77,14 +77,13 @@ const Game = ({
   };
 
   const updateDiffPer = () => {
-    // 最大値161.37
     const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
-    const per: number = Math.floor((100 - colorDiff) * 100) / 100;
+    const per: number = Math.floor((100 - (colorDiff / 200) * 100) * 100) / 100;
     setDiffPer(per);
   };
 
   const checkColor = () => {
-    if (diffPer > 90) {
+    if (diffPer > 98) {
       // TODO: 2.3にする
       const clearData: ClearData = {
         color: clickedColor!,
@@ -155,9 +154,11 @@ const Game = ({
           }}
         ></canvas>
       </div>
-      <Button onClick={type == "game" ? changeColor : () => {}}>
-        色を変える
-      </Button>
+      <Box padding={1}>
+        <Button onClick={type === "game" ? changeColor : () => {}}>
+          色を変える
+        </Button>
+      </Box>
     </div>
   );
 };
