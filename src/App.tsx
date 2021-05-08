@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Container, Box } from "@material-ui/core";
 import analyze from "rgbaster";
 import { hexToRgbStr } from "./lib/CalcColor";
@@ -6,6 +6,7 @@ import { hexToRgbStr } from "./lib/CalcColor";
 import Top from "./Top";
 import Game from "./Game";
 import Clear from "./Clear";
+import Canvas from "./Canvas";
 
 type AnalyzedColor = {
   color: string;
@@ -17,7 +18,10 @@ const App = () => {
   const [picture, setPicture] = useState<string>("images/cherry.jpg");
   const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("");
+  const [clickedColor, setClickedColor] = useState<string>();
   const [clearData, setClearData] = useState<ClearData>();
+
+  const canvas = useRef<HTMLElement>(null);
 
   useEffect(() => {
     firstLoad();
@@ -26,7 +30,10 @@ const App = () => {
   useEffect(() => {
     getPictureColors();
   }, [picture]);
+
   const firstLoad = () => {
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#333333";
     selectPicture();
     setType("top");
   };
@@ -48,6 +55,12 @@ const App = () => {
     setPictureColors(result.slice(0, 100));
   };
 
+  const clickColor = (clickedColor: string) => {
+    if (type === "game") {
+      setClickedColor(clickedColor);
+    }
+  };
+
   const startGame = () => {
     const color =
       pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
@@ -60,19 +73,33 @@ const App = () => {
     setType("clear");
   };
 
+  const gameOver = () => {
+    // canvas.current?.invertPictureColor();
+    setType("gameOver");
+    document.body.style.backgroundColor = "#000000";
+    document.body.style.color = "#ffffff";
+  };
+
   const mainArea = () => {
     if (type === "top") {
       return <Top clickStart={startGame}></Top>;
     } else if (type === "game" || type === "gameOver") {
       return (
-        <Game
-          questionColor={questionColor}
-          picture={picture}
-          changeColor={startGame}
-          type={type}
-          setType={setType}
-          clearGame={clearGame}
-        ></Game>
+        <div>
+          <Game
+            questionColor={questionColor}
+            clickedColor={clickedColor}
+            changeColor={startGame}
+            type={type}
+            clearGame={clearGame}
+            gameOver={gameOver}
+          ></Game>
+          <Canvas
+            ref={canvas}
+            picture={picture}
+            clickColor={clickColor}
+          ></Canvas>
+        </div>
       );
     } else if (type === "clear") {
       return (
