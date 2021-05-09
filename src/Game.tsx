@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useParams,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import chroma from "chroma-js";
+import analyze from "rgbaster";
 import { hexToRgbStr } from "./lib/CalcColor";
 import { Box, Grid } from "@material-ui/core";
 import Button from "./components/Button";
@@ -16,10 +10,10 @@ import Canvas from "./Canvas";
 
 type GameProps = {
   picture: string;
-  pictureColors: AnalyzedColor[];
 };
 
-const Game = ({ picture, pictureColors }: GameProps) => {
+const Game = ({ picture }: GameProps) => {
+  const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("");
   const [clickedColor, setClickedColor] = useState<string>();
   const [clickCount, setClickCount] = useState(-1);
@@ -31,8 +25,10 @@ const Game = ({ picture, pictureColors }: GameProps) => {
   useEffect(() => {
     const timer = setTimeout(function () {
       gameOver();
-    }, 60_000); // 60秒
+    }, 6_000); // 60秒
     setTimer(timer);
+
+    getPictureColors();
   }, []);
 
   useEffect(() => {
@@ -52,6 +48,11 @@ const Game = ({ picture, pictureColors }: GameProps) => {
   useEffect(() => {
     checkColor();
   }, [diffPer]);
+
+  const getPictureColors = async () => {
+    const result = await analyze(picture);
+    setPictureColors(result.slice(0, 100));
+  };
 
   const selectColor = () => {
     const color =

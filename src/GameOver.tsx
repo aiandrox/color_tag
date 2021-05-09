@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import Button from "./components/Button";
 import Canvas from "./Canvas";
@@ -9,6 +9,8 @@ type GameOverProps = {
 };
 
 const GameOver = ({ picture }: GameOverProps) => {
+  const history = useHistory();
+
   useEffect(() => {
     document.body.style.backgroundColor = "#000000";
     document.body.style.color = "#ffffff";
@@ -21,9 +23,13 @@ const GameOver = ({ picture }: GameOverProps) => {
       </h1>
       <Canvas picture={picture} clickColor={() => {}}></Canvas>
       <Box padding={1}></Box>
-      <Link to="/game">
-        <Button onClick={() => {}}>リトライ</Button>
-      </Link>
+      <Button
+        onClick={() => {
+          history.push(`/`);
+        }}
+      >
+        リトライ
+      </Button>
     </div>
   );
 };

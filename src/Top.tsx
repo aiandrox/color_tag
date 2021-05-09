@@ -1,7 +1,15 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Button from "./components/Button";
 
 const Top = () => {
+  const history = useHistory();
+
+  useEffect(() => {
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#333333";
+  }, []);
+
   const IrooniStyle = {
     color: "#FF00A1",
     fontSize: "5rem",
@@ -25,9 +33,13 @@ const Top = () => {
         </div>
         <div style={IrooniStyle}>いろおに</div>
       </h1>
-      <Link to="/game">
-        <Button onClick={() => {}}>いろいろなーにいろ？</Button>
-      </Link>
+      <Button
+        onClick={() => {
+          history.push(`/game`);
+        }}
+      >
+        いろいろなーにいろ？
+      </Button>
     </div>
   );
 };

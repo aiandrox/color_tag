@@ -11,28 +11,17 @@ import Clear from "./Clear";
 import Canvas from "./Canvas";
 
 const App = () => {
-  const [type, setType] = useState<string>("top");
   const [picture, setPicture] = useState<string>(`images/cherry.jpg`);
-  const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
+  // const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
   // const [questionColor, setQuestionColor] = useState<string>("");
-  const [clickedColor, setClickedColor] = useState<string>();
-  const [clearData, setClearData] = useState<ClearData>();
+  // const [clickedColor, setClickedColor] = useState<string>();
+  // const [clearData, setClearData] = useState<ClearData>();
 
-  const canvas = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    firstLoad();
-  }, []);
+  // const canvas = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    getPictureColors();
-  }, [picture]);
-
-  const firstLoad = () => {
-    document.body.style.backgroundColor = "#ffffff";
-    document.body.style.color = "#333333";
     selectPicture();
-  };
+  }, []);
 
   const selectPicture = () => {
     const pictures = [
@@ -46,10 +35,10 @@ const App = () => {
     setPicture(`images/${picture}`);
   };
 
-  const getPictureColors = async () => {
-    const result = await analyze(picture);
-    setPictureColors(result.slice(0, 100));
-  };
+  // const getPictureColors = async () => {
+  //   const result = await analyze(picture);
+  //   setPictureColors(result.slice(0, 100));
+  // };
 
   // const startGame = () => {
   //   const color =
@@ -58,16 +47,16 @@ const App = () => {
   //   setType("game");
   // };
 
-  const clearGame = (clearData: ClearData) => {
-    setClearData(clearData);
-    setType("clear");
-  };
+  // const clearGame = (clearData: ClearData) => {
+  //   setClearData(clearData);
+  //   setType("clear");
+  // };
 
-  const gameOver = () => {
-    setType("gameOver");
-    document.body.style.backgroundColor = "#000000";
-    document.body.style.color = "#ffffff";
-  };
+  // const gameOver = () => {
+  //   setType("gameOver");
+  //   document.body.style.backgroundColor = "#000000";
+  //   document.body.style.color = "#ffffff";
+  // };
 
   // const mainArea = () => {
   //   if (type === "top") {
@@ -112,9 +101,7 @@ const App = () => {
               <Route exact path="/" render={() => <Top></Top>} />
               <Route
                 path="/game"
-                render={() => (
-                  <Game picture={picture} pictureColors={pictureColors}></Game>
-                )}
+                render={() => <Game picture={picture}></Game>}
               />
               <Route exact path="/clear" children={Clear} />
               <Route
