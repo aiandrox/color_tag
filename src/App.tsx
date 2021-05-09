@@ -6,6 +6,7 @@ import Top from "./Top";
 import Game from "./Game";
 import GameOver from "./GameOver";
 import Clear from "./Clear";
+import Result from "./Result";
 
 const App = () => {
   const [picture, setPicture] = useState<string>(`images/cherry.jpg`);
@@ -43,7 +44,7 @@ const App = () => {
                 path="/game-over"
                 render={() => <GameOver picture={picture}></GameOver>}
               />
-              {/* {mainArea()} */}
+              <Route exact path="/result" component={Result} />
             </Switch>
           </Box>
         </Router>

@@ -28,7 +28,7 @@ const GameOver = ({ picture }: GameOverProps) => {
           history.push(`/`);
         }}
       >
-        リトライ
+        もう一回！
       </Button>
     </div>
   );

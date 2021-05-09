@@ -92,12 +92,12 @@ const Game = ({ picture }: GameProps) => {
         <span style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
           {questionColor}
         </span>
-        を見つけてクリックしてね！
+        を見つけて！
       </p>
       <Box height="5rem" m="1rem">
         <Grid container justify="center">
           <ColorBox color={clickedColor}></ColorBox>
-          <Box height="5rem" m="1rem">
+          <Box height="5rem" width="5rem" m="1rem">
             一致度
             <br />
             {diffPer}%
