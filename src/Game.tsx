@@ -72,7 +72,12 @@ const Game = ({
 
   return (
     <div>
-      <h1>{questionColor}</h1>
+      <p>
+        <span style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
+          {questionColor}
+        </span>
+        を見つけてクリックしてね！
+      </p>
       <Box height="5rem" m="1rem">
         <Grid container justify="center">
           <ColorBox color={clickedColor}></ColorBox>
