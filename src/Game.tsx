@@ -1,4 +1,12 @@
 import { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useParams,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import chroma from "chroma-js";
 import { hexToRgbStr } from "./lib/CalcColor";
 import { Box, Grid } from "@material-ui/core";
@@ -17,9 +25,11 @@ const Game = ({ picture, pictureColors }: GameProps) => {
   const [clickCount, setClickCount] = useState(-1);
   const [diffPer, setDiffPer] = useState(0);
 
+  const history = useHistory();
+
   useEffect(() => {
-    selectColor();
-  }, []);
+    if (pictureColors.length) selectColor();
+  }, [pictureColors]);
 
   useEffect(() => {
     setClickCount(clickCount + 1);
@@ -50,12 +60,16 @@ const Game = ({ picture, pictureColors }: GameProps) => {
   const checkColorClear = () => {
     if (diffPer > 90) {
       // TODO: 2.3にする
-      const clearData: ClearData = {
-        color: clickedColor!,
-        count: clickCount,
-        per: diffPer,
-      };
-      // clearGame(clearData);
+      // const clearData: ClearData = {
+      //   color: clickedColor!,
+      //   count: clickCount,
+      //   per: diffPer,
+      // };
+      history.push(
+        `/clear?question=${escape(questionColor)}&clear=${escape(
+          clickedColor!
+        )}&count=${clickCount}`
+      );
     }
   };
 
@@ -65,7 +79,7 @@ const Game = ({ picture, pictureColors }: GameProps) => {
 
   const checkGameOver = () => {
     if (clickCount >= 20) {
-      // gameOver();
+      history.push(`/game-over`);
     }
   };
 

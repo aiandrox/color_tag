@@ -1,18 +1,39 @@
+import { useState, useEffect } from "react";
+import queryString from "query-string";
+
 import { Box, Grid } from "@material-ui/core";
 import ColorBox from "./components/ColorBox";
 import Button from "./components/Button";
 
-type ClearProps = {
+type ClearData = {
   questionColor: string;
-  clearData: ClearData;
-  firstLoad: () => void;
+  clearColor: string;
+  count: number;
 };
 
-const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
+const Clear = () => {
+  // const [clearData, setClearData] = useState<ClearData>();
+  const [clearColor, setClearColor] = useState<string>();
+
+  // const history = useHistory();
+
+  useEffect(() => {
+    const params = queryString.parse(window.location.search);
+    const data: ClearData = {
+      questionColor: params.question as string,
+      clearColor: params.clear as string,
+      count: Number(params.count),
+    };
+    setClearColor(params.clear as string);
+  }, []);
+
   const clickTwitterShare = () => {
-    const message = `${escape(questionColor)} に${
-      clearData.per
-    }%25一致した${escape(clearData.color)}を見つけたよ！`;
+    const params = queryString.parse(window.location.search);
+    console.log(params);
+    const message = "hoge";
+    // const message = `${escape(questionColor)} に${
+    //   clearData.per
+    // }%25一致した${escape(clearData.color)}を見つけたよ！`;
     const url = `https://twitter.com/intent/tweet?text=%0A%0A${message}%0A&url=https://hoge.com&hashtags=アルティメットいろおに`;
     window.open(url, "_blank");
   };
@@ -22,7 +43,7 @@ const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
       <h1 style={{ fontFamily: "'M PLUS Rounded 1c', sans-serif" }}>
         みぃつけた！
       </h1>
-      {clearData.count}回でClear!!
+      {/* {clearData.count}回でClear!!
       <Box>
         一致度は<b>{clearData.per}%</b>
       </Box>
@@ -38,9 +59,9 @@ const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
             <ColorBox color={clearData.color}></ColorBox>
           </Box>
         </Grid>
-      </Box>
+      </Box> */}
       <Box padding={1}>
-        <Button onClick={firstLoad}>トップに戻る</Button>
+        {/* <Button onClick={firstLoad}>トップに戻る</Button> */}
         <Button onClick={clickTwitterShare}>Twitterでシェア</Button>
       </Box>
     </div>
