@@ -30,8 +30,8 @@ const App = () => {
   return (
     <div className="App">
       <Container maxWidth="md">
-        <Router>
-          <Box textAlign="center">
+        <Box textAlign="center">
+          <Router>
             <Switch>
               <Route exact path="/" render={() => <Top></Top>} />
               <Route
@@ -46,8 +46,8 @@ const App = () => {
               />
               <Route exact path="/result" component={Result} />
             </Switch>
-          </Box>
-        </Router>
+          </Router>
+        </Box>
       </Container>
     </div>
   );
