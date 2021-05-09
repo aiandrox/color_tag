@@ -23,6 +23,14 @@ const Game = ({
 }: GameProps) => {
   const [clickCount, setClickCount] = useState(-1);
   const [diffPer, setDiffPer] = useState(0);
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
+
+  useEffect(() => {
+    const timer = setTimeout(function () {
+      gameOver();
+    }, 90_000); // 90秒
+    setTimer(timer);
+  }, []);
 
   useEffect(() => {
     setClickCount(clickCount + 1);
@@ -52,6 +60,7 @@ const Game = ({
         per: diffPer,
       };
       clearGame(clearData);
+      clearTimeout(timer!);
     }
   };
 
