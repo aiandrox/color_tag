@@ -25,7 +25,7 @@ const Game = ({ picture }: GameProps) => {
   useEffect(() => {
     const timer = setTimeout(function () {
       gameOver();
-    }, 60_000); // 60秒
+    }, 90_000); // 90秒
     setTimer(timer);
 
     getPictureColors();
