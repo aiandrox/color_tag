@@ -45,8 +45,7 @@ const Game = ({
   };
 
   const checkColor = () => {
-    if (diffPer > 90) {
-      // TODO: 2.3にする
+    if (diffPer > 98) {
       const clearData: ClearData = {
         color: clickedColor!,
         count: clickCount,
@@ -57,7 +56,7 @@ const Game = ({
   };
 
   const checkGameOver = () => {
-    if (clickCount >= 20) {
+    if (clickCount >= 200) {
       gameOver();
     }
   };
@@ -75,7 +74,7 @@ const Game = ({
           </Box>
         </Grid>
       </Box>
-      {clickCount}回{children}
+      {children}
       <Box padding={1}></Box>
       <Button onClick={changeColor}>色を変える</Button>
     </div>
