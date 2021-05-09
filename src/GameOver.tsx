@@ -16,6 +16,13 @@ const GameOver = ({ picture }: GameOverProps) => {
     document.body.style.color = "#ffffff";
   }, []);
 
+  const clickTwitterShare = () => {
+    const url = "https://ultimate-colortag.vercel.app/";
+    const message = "残念ながら、おににつかまってしまいました……。";
+    const tweetUrl = `https://twitter.com/intent/tweet?text=%0A%0A${message}%0A&url=${url}&hashtags=アルティメットいろおに`;
+    window.open(tweetUrl, "_blank");
+  };
+
   return (
     <div>
       <h1 style={{ fontSize: "3rem", fontFamily: "'New Tegomin', serif" }}>
@@ -30,6 +37,7 @@ const GameOver = ({ picture }: GameOverProps) => {
       >
         もう一回！
       </Button>
+      <Button onClick={clickTwitterShare}>Twitterでシェア</Button>
     </div>
   );
 };
