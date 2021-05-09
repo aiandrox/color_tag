@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import analyze from "rgbaster";
 import { hexToRgbStr, matchPer } from "./lib/CalcColor";
-import { Box, Grid } from "@material-ui/core";
+import { Box, Grid, Fade } from "@material-ui/core";
 import Button from "./components/Button";
 import ColorBox from "./components/ColorBox";
 import Canvas from "./Canvas";
@@ -12,6 +12,7 @@ type GameProps = {
 };
 
 const Game = ({ picture }: GameProps) => {
+  const [loading, setLoading] = useState(true);
   const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("");
   const [clickedColor, setClickedColor] = useState<string>();
@@ -57,6 +58,7 @@ const Game = ({ picture }: GameProps) => {
     const color =
       pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
     setQuestionColor(hexToRgbStr(color));
+    setLoading(false);
   };
 
   const updateDiffPer = () => {
@@ -88,26 +90,37 @@ const Game = ({ picture }: GameProps) => {
 
   return (
     <div>
-      <p>
-        <span style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
-          {questionColor}
-        </span>
-        を見つけて！
-      </p>
-      <Box height="5rem" m="1rem">
-        <Grid container justify="center">
-          <ColorBox color={clickedColor}></ColorBox>
-          <Box height="5rem" width="5rem" m="1rem">
-            一致度
-            <br />
-            {diffPer}%
+      <Fade in={loading}>
+        <Box>ちょっと待ってね</Box>
+      </Fade>
+      <Fade in={!loading}>
+        <Box>
+          <p>
+            <span style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
+              {questionColor}
+            </span>
+            を見つけて！
+          </p>
+          <Box height="5rem" m="1rem">
+            <Grid container justify="center">
+              <ColorBox color={clickedColor}></ColorBox>
+              <Box height="5rem" width="5rem" m="1rem">
+                一致度
+                <br />
+                {diffPer}%
+              </Box>
+            </Grid>
           </Box>
-        </Grid>
-      </Box>
 
-      <Canvas type="game" picture={picture} clickColor={clickColor}></Canvas>
-      <Box padding={1}></Box>
-      <Button onClick={selectColor}>色を変える</Button>
+          <Canvas
+            type="game"
+            picture={picture}
+            clickColor={clickColor}
+          ></Canvas>
+          <Box padding={1}></Box>
+          <Button onClick={selectColor}>色を変える</Button>
+        </Box>
+      </Fade>
     </div>
   );
 };
