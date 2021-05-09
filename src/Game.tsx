@@ -104,7 +104,7 @@ const Game = ({ picture }: GameProps) => {
           </Box>
         </Grid>
       </Box>
-      {clickCount}回
+
       <Canvas type="game" picture={picture} clickColor={clickColor}></Canvas>
       <Box padding={1}></Box>
       <Button onClick={selectColor}>色を変える</Button>
