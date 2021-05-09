@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import chroma from "chroma-js";
 import analyze from "rgbaster";
-import { hexToRgbStr } from "./lib/CalcColor";
+import { hexToRgbStr, matchPer } from "./lib/CalcColor";
 import { Box, Grid } from "@material-ui/core";
 import Button from "./components/Button";
 import ColorBox from "./components/ColorBox";
@@ -25,7 +24,7 @@ const Game = ({ picture }: GameProps) => {
   useEffect(() => {
     const timer = setTimeout(function () {
       gameOver();
-    }, 6_000); // 60秒
+    }, 60_000); // 60秒
     setTimer(timer);
 
     getPictureColors();
@@ -61,13 +60,14 @@ const Game = ({ picture }: GameProps) => {
   };
 
   const updateDiffPer = () => {
-    const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
-    const per: number = Math.floor((100 - (colorDiff / 200) * 100) * 100) / 100;
-    setDiffPer(per);
+    if (clickedColor) {
+      const per = matchPer(questionColor, clickedColor);
+      setDiffPer(per);
+    }
   };
 
   const checkColor = () => {
-    if (diffPer > 98.5) {
+    if (diffPer > 99) {
       clearTimeout(timer!);
       history.push(
         `/clear?question=${escape(questionColor)}&clear=${escape(

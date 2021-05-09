@@ -6,6 +6,12 @@ type ColorObj = {
   b: number;
 };
 
+export const matchPer = (color: string, otherColor: string) => {
+  const colorDiff: number = chroma.deltaE(color, otherColor);
+  const per: number = Math.floor((100 - (colorDiff / 200) * 100) * 100) / 100;
+  return per;
+};
+
 export const rgbStrToObj = (str: string) => {
   // from text "rgb(4,8,16)" to { r: 4, g: 8, a:16 }
   const result = /([0-9]{1,3}), *([0-9]{1,3}), *([0-9]{1,3})/i.exec(str);
