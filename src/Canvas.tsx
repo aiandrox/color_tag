@@ -3,6 +3,7 @@ import { hexToRgbStr } from "./lib/CalcColor";
 
 type CanvasProps = {
   picture: string;
+  type: string;
   clickColor: (clickedColor: string) => void;
 };
 
@@ -33,7 +34,7 @@ const Canvas = (props: CanvasProps) => {
         const scale = context!.canvas.width / img.width;
         context.setTransform(scale, 0, 0, scale, 0, 0);
         context.drawImage(img, 0, 0);
-        // if (props.type === "gameOver") invertPictureColor();
+        if (props.type === "gameOver") invertPictureColor();
       };
     }
   }, [context, props.picture]);

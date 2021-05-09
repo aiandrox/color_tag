@@ -68,11 +68,6 @@ const Game = ({ picture }: GameProps) => {
 
   const checkColor = () => {
     if (diffPer > 98.5) {
-      // const clearData: ClearData = {
-      //   color: clickedColor!,
-      //   count: clickCount,
-      //   per: diffPer,
-      // };
       clearTimeout(timer!);
       history.push(
         `/clear?question=${escape(questionColor)}&clear=${escape(
@@ -109,7 +104,8 @@ const Game = ({ picture }: GameProps) => {
           </Box>
         </Grid>
       </Box>
-      {clickCount}回<Canvas picture={picture} clickColor={clickColor}></Canvas>
+      {clickCount}回
+      <Canvas type="game" picture={picture} clickColor={clickColor}></Canvas>
       <Box padding={1}></Box>
       <Button onClick={selectColor}>色を変える</Button>
     </div>

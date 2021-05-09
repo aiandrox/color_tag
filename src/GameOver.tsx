@@ -21,7 +21,7 @@ const GameOver = ({ picture }: GameOverProps) => {
       <h1 style={{ fontSize: "3rem", fontFamily: "'New Tegomin', serif" }}>
         つかまえた
       </h1>
-      <Canvas picture={picture} clickColor={() => {}}></Canvas>
+      <Canvas type="gameOver" picture={picture} clickColor={() => {}}></Canvas>
       <Box padding={1}></Box>
       <Button
         onClick={() => {
