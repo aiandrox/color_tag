@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Container, Box } from "@material-ui/core";
 import analyze from "rgbaster";
 import { hexToRgbStr } from "./lib/CalcColor";
@@ -9,17 +10,12 @@ import GameOver from "./GameOver";
 import Clear from "./Clear";
 import Canvas from "./Canvas";
 
-type AnalyzedColor = {
-  color: string;
-  count: number;
-};
-
 const App = () => {
   const [type, setType] = useState<string>("top");
   const [pictureLoaded, setPictureLoaded] = useState(false);
   const [picture, setPicture] = useState<string>("images/cherry.jpg");
   const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
-  const [questionColor, setQuestionColor] = useState<string>("");
+  // const [questionColor, setQuestionColor] = useState<string>("");
   const [clickedColor, setClickedColor] = useState<string>();
   const [clearData, setClearData] = useState<ClearData>();
 
@@ -64,12 +60,12 @@ const App = () => {
     }
   };
 
-  const startGame = () => {
-    const color =
-      pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
-    setQuestionColor(hexToRgbStr(color));
-    setType("game");
-  };
+  // const startGame = () => {
+  //   const color =
+  //     pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
+  //   setQuestionColor(hexToRgbStr(color));
+  //   setType("game");
+  // };
 
   const clearGame = (clearData: ClearData) => {
     setClearData(clearData);
@@ -82,50 +78,56 @@ const App = () => {
     document.body.style.color = "#ffffff";
   };
 
-  const mainArea = () => {
-    if (type === "top") {
-      return <Top clickStart={startGame}></Top>;
-    } else if (type === "game") {
-      return (
-        <Game
-          questionColor={questionColor}
-          clickedColor={clickedColor}
-          changeColor={startGame}
-          clearGame={clearGame}
-          gameOver={gameOver}
-        >
-          <Canvas
-            type={type}
-            picture={picture}
-            clickColor={clickColor}
-          ></Canvas>
-        </Game>
-      );
-    } else if (type === "gameOver") {
-      return (
-        <GameOver firstLoad={firstLoad}>
-          <Canvas
-            type={type}
-            picture={picture}
-            clickColor={clickColor}
-          ></Canvas>
-        </GameOver>
-      );
-    } else if (type === "clear") {
-      return (
-        <Clear
-          questionColor={questionColor}
-          clearData={clearData!}
-          firstLoad={firstLoad}
-        ></Clear>
-      );
-    }
-  };
+  // const mainArea = () => {
+  //   if (type === "top") {
+  //     // return <Top clickStart={startGame}></Top>;
+  //   } else if (type === "game") {
+  //     return (
+  //       <Game picture={picture} pictureColors={pictureColors}>
+  //         <Canvas
+  //           type={type}
+  //           picture={picture}
+  //           clickColor={clickColor}
+  //         ></Canvas>
+  //       </Game>
+  //     );
+  //   } else if (type === "gameOver") {
+  //     return (
+  //       <GameOver firstLoad={firstLoad}>
+  //         <Canvas
+  //           type={type}
+  //           picture={picture}
+  //           clickColor={clickColor}
+  //         ></Canvas>
+  //       </GameOver>
+  //     );
+  //   } else if (type === "clear") {
+  //     return (
+  //       <Clear
+  //         questionColor={questionColor}
+  //         clearData={clearData!}
+  //         firstLoad={firstLoad}
+  //       ></Clear>
+  //     );
+  //   }
+  // };
 
   return (
     <div className="App">
       <Container maxWidth="md">
-        <Box textAlign="center">{mainArea()}</Box>
+        <Router>
+          <Box textAlign="center">
+            <Route exact path="/" render={() => <Top></Top>} />
+            <Route
+              path="/game"
+              render={() => (
+                <Game picture={picture} pictureColors={pictureColors}></Game>
+              )}
+            />
+            <Route exact path="/clear" component={Clear} />
+            {/* {mainArea()} */}
+          </Box>
+        </Router>
       </Container>
     </div>
   );

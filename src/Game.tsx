@@ -1,28 +1,25 @@
 import { useState, useEffect } from "react";
 import chroma from "chroma-js";
+import { hexToRgbStr } from "./lib/CalcColor";
 import { Box, Grid } from "@material-ui/core";
 import Button from "./components/Button";
 import ColorBox from "./components/ColorBox";
+import Canvas from "./Canvas";
 
 type GameProps = {
-  questionColor: string;
-  clickedColor: string | undefined;
-  changeColor: () => void;
-  clearGame: (clearColor: ClearData) => void;
-  gameOver: () => void;
-  children: JSX.Element;
+  picture: string;
+  pictureColors: AnalyzedColor[];
 };
 
-const Game = ({
-  questionColor,
-  clickedColor,
-  changeColor,
-  clearGame,
-  gameOver,
-  children,
-}: GameProps) => {
+const Game = ({ picture, pictureColors }: GameProps) => {
+  const [questionColor, setQuestionColor] = useState<string>("");
+  const [clickedColor, setClickedColor] = useState<string>();
   const [clickCount, setClickCount] = useState(-1);
   const [diffPer, setDiffPer] = useState(0);
+
+  useEffect(() => {
+    selectColor();
+  }, []);
 
   useEffect(() => {
     setClickCount(clickCount + 1);
@@ -35,8 +32,14 @@ const Game = ({
   }, [clickedColor]);
 
   useEffect(() => {
-    checkColor();
+    checkColorClear();
   }, [diffPer]);
+
+  const selectColor = () => {
+    const color =
+      pictureColors[Math.floor(Math.random() * pictureColors.length)].color;
+    setQuestionColor(hexToRgbStr(color));
+  };
 
   const updateDiffPer = () => {
     const colorDiff: number = chroma.deltaE(questionColor, clickedColor);
@@ -44,7 +47,7 @@ const Game = ({
     setDiffPer(per);
   };
 
-  const checkColor = () => {
+  const checkColorClear = () => {
     if (diffPer > 90) {
       // TODO: 2.3にする
       const clearData: ClearData = {
@@ -52,13 +55,17 @@ const Game = ({
         count: clickCount,
         per: diffPer,
       };
-      clearGame(clearData);
+      // clearGame(clearData);
     }
+  };
+
+  const clickColor = (clickedColor: string) => {
+    setClickedColor(clickedColor);
   };
 
   const checkGameOver = () => {
     if (clickCount >= 20) {
-      gameOver();
+      // gameOver();
     }
   };
 
@@ -75,9 +82,9 @@ const Game = ({
           </Box>
         </Grid>
       </Box>
-      {clickCount}回{children}
+      {clickCount}回<Canvas picture={picture} clickColor={clickColor}></Canvas>
       <Box padding={1}></Box>
-      <Button onClick={changeColor}>色を変える</Button>
+      <Button onClick={selectColor}>色を変える</Button>
     </div>
   );
 };

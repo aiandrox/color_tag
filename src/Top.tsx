@@ -1,10 +1,7 @@
+import { Link } from "react-router-dom";
 import Button from "./components/Button";
 
-type TopProps = {
-  clickStart: () => void;
-};
-
-const Top = (props: TopProps) => {
+const Top = () => {
   const IrooniStyle = {
     color: "#FF00A1",
     fontSize: "5rem",
@@ -28,7 +25,9 @@ const Top = (props: TopProps) => {
         </div>
         <div style={IrooniStyle}>いろおに</div>
       </h1>
-      <Button onClick={props.clickStart}>いろいろなーにいろ？</Button>
+      <Link to="/game">
+        <Button onClick={() => {}}>いろいろなーにいろ？</Button>
+      </Link>
     </div>
   );
 };
