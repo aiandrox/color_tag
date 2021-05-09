@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import queryString from "query-string";
 
 import { Box, Grid } from "@material-ui/core";
@@ -12,10 +13,9 @@ type ClearData = {
 };
 
 const Clear = () => {
-  // const [clearData, setClearData] = useState<ClearData>();
-  const [clearColor, setClearColor] = useState<string>();
+  const [clearData, setClearData] = useState<ClearData>();
 
-  // const history = useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     const params = queryString.parse(window.location.search);
@@ -24,7 +24,7 @@ const Clear = () => {
       clearColor: params.clear as string,
       count: Number(params.count),
     };
-    setClearColor(params.clear as string);
+    setClearData(data);
   }, []);
 
   const clickTwitterShare = () => {
@@ -45,27 +45,31 @@ const Clear = () => {
       <h1 style={{ fontFamily: "'M PLUS Rounded 1c', sans-serif" }}>
         みぃつけた！
       </h1>
-      {/* {clearData.count}回で見つけたよ！すごい！！
-      <Box>
-        一致度：<b>{clearData.per}%</b>
-      </Box>
+      {clearData?.count}回で見つけたよ！すごい！！
+      <Box>{/* 一致度：<b>{per}%</b> */}</Box>
       <Box m="1rem">
         <Grid container justify="center">
           <Box>
             <p>おにの指定</p>
-            <ColorBox color={questionColor}></ColorBox>
+            <ColorBox color={clearData?.questionColor}></ColorBox>
           </Box>
           <Box width="1rem"></Box>
           <Box>
             <p>あなた</p>
-            <ColorBox color={clearData.color}></ColorBox>
+            <ColorBox color={clearData?.clearColor}></ColorBox>
           </Box>
         </Grid>
       </Box>
       <Box padding={1}>
-        <Button onClick={firstLoad}>トップに戻る</Button>
+        <Button
+          onClick={() => {
+            history.push("/");
+          }}
+        >
+          トップに戻る
+        </Button>
         <Button onClick={clickTwitterShare}>Twitterでシェア</Button>
-      </Box> */}
+      </Box>
     </div>
   );
 };

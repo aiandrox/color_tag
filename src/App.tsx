@@ -37,7 +37,7 @@ const App = () => {
                 path="/game"
                 render={() => <Game picture={picture}></Game>}
               />
-              <Route exact path="/clear" children={Clear} />
+              <Route exact path="/clear" component={Clear} />
               <Route
                 exact
                 path="/game-over"
