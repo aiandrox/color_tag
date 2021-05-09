@@ -1,23 +1,43 @@
+import { useState, useEffect } from "react";
+import queryString from "query-string";
+
 import { Box, Grid } from "@material-ui/core";
 import ColorBox from "./components/ColorBox";
 import Button from "./components/Button";
 
-type ClearProps = {
+type ClearData = {
   questionColor: string;
-  clearData: ClearData;
-  firstLoad: () => void;
+  clearColor: string;
+  count: number;
 };
 
-const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
+const Clear = () => {
+  // const [clearData, setClearData] = useState<ClearData>();
+  const [clearColor, setClearColor] = useState<string>();
+
+  // const history = useHistory();
+
+  useEffect(() => {
+    const params = queryString.parse(window.location.search);
+    const data: ClearData = {
+      questionColor: params.question as string,
+      clearColor: params.clear as string,
+      count: Number(params.count),
+    };
+    setClearColor(params.clear as string);
+  }, []);
+
   const clickTwitterShare = () => {
-    const message = `${clearData.count}回で${escape(
-      clearData.color
-    )}を見つけたよ！%0Aおにの指定：${escape(questionColor)}%0A一致度：${
-      clearData.per
-    }%25`;
-    const url = "https://ultimate-colortag.vercel.app/";
-    const tweetUrl = `https://twitter.com/intent/tweet?text=%0A%0A${message}%0A&url=${url}&hashtags=アルティメットいろおに`;
-    window.open(tweetUrl, "_blank");
+    const params = queryString.parse(window.location.search);
+    console.log(params);
+    // const message = `${clearData.count}回で${escape(
+    //   clearData.color
+    // )}を見つけたよ！%0Aおにの指定：${escape(questionColor)}%0A一致度：${
+    //   clearData.per
+    // }%25`;
+    // const url = "https://ultimate-colortag.vercel.app/";
+    // const tweetUrl = `https://twitter.com/intent/tweet?text=%0A%0A${message}%0A&url=${url}&hashtags=アルティメットいろおに`;
+    // window.open(tweetUrl, "_blank");
   };
 
   return (
@@ -25,7 +45,7 @@ const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
       <h1 style={{ fontFamily: "'M PLUS Rounded 1c', sans-serif" }}>
         みぃつけた！
       </h1>
-      {clearData.count}回で見つけたよ！すごい！！
+      {/* {clearData.count}回で見つけたよ！すごい！！
       <Box>
         一致度：<b>{clearData.per}%</b>
       </Box>
@@ -45,7 +65,7 @@ const Clear = ({ questionColor, clearData, firstLoad }: ClearProps) => {
       <Box padding={1}>
         <Button onClick={firstLoad}>トップに戻る</Button>
         <Button onClick={clickTwitterShare}>Twitterでシェア</Button>
-      </Box>
+      </Box> */}
     </div>
   );
 };
