@@ -28,7 +28,7 @@ const Game = ({
   useEffect(() => {
     const timer = setTimeout(function () {
       gameOver();
-    }, 90_000); // 90秒
+    }, 60_000); // 60秒
     setTimer(timer);
   }, []);
 
@@ -53,7 +53,7 @@ const Game = ({
   };
 
   const checkColor = () => {
-    if (diffPer > 98) {
+    if (diffPer > 98.5) {
       const clearData: ClearData = {
         color: clickedColor!,
         count: clickCount,
@@ -65,7 +65,8 @@ const Game = ({
   };
 
   const checkGameOver = () => {
-    if (clickCount >= 200) {
+    if (clickCount >= 100) {
+      clearTimeout(timer!);
       gameOver();
     }
   };
