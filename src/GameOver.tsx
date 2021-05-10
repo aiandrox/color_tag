@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Box } from "@material-ui/core";
-import Button from "./components/Button";
+import { Box, Button } from "@material-ui/core";
+import CustomButton from "./components/Button";
+import TwitterIcon from "./components/TwitterIcon";
 import Canvas from "./Canvas";
 
 type GameOverProps = {
@@ -30,15 +31,24 @@ const GameOver = ({ picture }: GameOverProps) => {
       </h1>
       <Canvas type="gameOver" picture={picture} clickColor={() => {}}></Canvas>
       <Box padding={1}></Box>
-      <Button
+      <CustomButton
         onClick={() => {
           history.push(`/`);
         }}
       >
         もう一回！
-      </Button>
+      </CustomButton>
       <Box component="span" m={1}></Box>
-      <Button onClick={clickTwitterShare}>Twitterでシェア</Button>
+      <Button
+        disableElevation
+        variant="contained"
+        color="primary"
+        onClick={clickTwitterShare}
+        style={{ textTransform: "none" }}
+        startIcon={<TwitterIcon />}
+      >
+        Twitterでシェア
+      </Button>
     </div>
   );
 };

@@ -3,9 +3,10 @@ import { useHistory } from "react-router-dom";
 import queryString from "query-string";
 import { matchPer } from "./lib/CalcColor";
 
-import { Box, Grid } from "@material-ui/core";
+import { Box, Grid, Button } from "@material-ui/core";
 import ColorBox from "./components/ColorBox";
-import Button from "./components/Button";
+import CustomButton from "./components/Button";
+import TwitterIcon from "./components/TwitterIcon";
 
 type ClearData = {
   questionColor: string;
@@ -71,14 +72,23 @@ const Clear = () => {
       </Box>
       <Box padding={1}>
         <Button
+          disableElevation
+          variant="contained"
+          color="primary"
+          onClick={clickTwitterShare}
+          style={{ textTransform: "none" }}
+          startIcon={<TwitterIcon />}
+        >
+          Twitterでシェア
+        </Button>
+        <Box m={3}></Box>
+        <CustomButton
           onClick={() => {
             history.push("/");
           }}
         >
           最初に戻る
-        </Button>
-        <Box component="span" m={1}></Box>
-        <Button onClick={clickTwitterShare}>Twitterでシェア</Button>
+        </CustomButton>
       </Box>
     </div>
   );
