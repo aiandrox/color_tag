@@ -37,6 +37,7 @@ const GameOver = ({ picture }: GameOverProps) => {
       >
         もう一回！
       </Button>
+      <Box component="span" m={1}></Box>
       <Button onClick={clickTwitterShare}>Twitterでシェア</Button>
     </div>
   );

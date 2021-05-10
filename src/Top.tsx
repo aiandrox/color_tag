@@ -42,7 +42,7 @@ const Top = () => {
         <Button
           disableElevation
           variant="contained"
-          color="primary"
+          color="secondary"
           size="small"
           href="https://b.hatena.ne.jp/entry/s/ultimate-colortag.vercel.app"
           target="_blank"

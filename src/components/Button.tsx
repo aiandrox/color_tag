@@ -1,3 +1,4 @@
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import MaterialButton from "@material-ui/core/Button";
 
 type ButtonProps = {
@@ -6,16 +7,27 @@ type ButtonProps = {
 };
 
 const Button = (props: ButtonProps) => {
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: "#f05461",
+      },
+    },
+  });
+
   return (
-    <MaterialButton
-      variant="outlined"
-      color="primary"
-      size="large"
-      onClick={props.onClick}
-      style={{ textTransform: "none" }}
-    >
-      {props.children}
-    </MaterialButton>
+    <ThemeProvider theme={theme}>
+      <MaterialButton
+        disableElevation
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={props.onClick}
+        style={{ textTransform: "none" }}
+      >
+        {props.children}
+      </MaterialButton>
+    </ThemeProvider>
   );
 };
 
