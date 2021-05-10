@@ -77,6 +77,7 @@ const Clear = () => {
         >
           最初に戻る
         </Button>
+        <Box component="span" m="2px"></Box>
         <Button onClick={clickTwitterShare}>Twitterでシェア</Button>
       </Box>
     </div>
