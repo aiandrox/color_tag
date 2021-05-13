@@ -44,12 +44,10 @@ const Game = ({ picture }: GameProps) => {
   }, [pictureColors]);
 
   useEffect(() => {
-    setClickCount(clickCount + 1);
-    if (clickCount >= 100) gameOver();
-  }, [clickedColor]);
-
-  useEffect(() => {
     if (clickedColor === undefined) return;
+    if (clickCount >= 100) gameOver();
+
+    setClickCount(clickCount + 1);
     updateDiffPer();
   }, [clickedColor]);
 
