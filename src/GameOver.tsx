@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import queryString from "query-string";
 import { Box, Button } from "@material-ui/core";
 import CustomButton from "./components/Button";
 import TwitterIcon from "./components/TwitterIcon";
@@ -10,9 +11,14 @@ type GameOverProps = {
 };
 
 const GameOver = ({ picture }: GameOverProps) => {
+  const [mode, setMode] = useState<Mode>("ultimate");
   const history = useHistory();
+  const location = window.location;
 
   useEffect(() => {
+    const params = queryString.parse(location.search);
+    setMode(params.mode as Mode);
+
     document.body.style.backgroundColor = "#000000";
     document.body.style.color = "#ffffff";
   }, []);
@@ -32,8 +38,9 @@ const GameOver = ({ picture }: GameOverProps) => {
       <Canvas type="gameOver" picture={picture} clickColor={() => {}}></Canvas>
       <Box padding={1}></Box>
       <CustomButton
+        color="primary"
         onClick={() => {
-          history.push(`/`);
+          history.push(`/game?mode=${mode}`);
         }}
       >
         もう一回！

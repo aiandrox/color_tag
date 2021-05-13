@@ -19,8 +19,9 @@ const Top = () => {
       <Logo></Logo>
       <p>おにが言った色を写真から見つけてクリックしよう！</p>
       <StartButton
+        color="primary"
         onClick={() => {
-          history.push(`/game`);
+          history.push(`/game?mode=ultimate`);
         }}
       >
         いろいろなーにいろ？

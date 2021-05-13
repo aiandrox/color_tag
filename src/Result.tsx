@@ -21,6 +21,7 @@ const Clear = () => {
     count: 0,
   } as ClearData);
   const [diffPer, setDiffPer] = useState(0);
+  const [mode, setMode] = useState<Mode>("ultimate");
 
   const history = useHistory();
   const location = window.location;
@@ -32,13 +33,18 @@ const Clear = () => {
       clearColor: params.clear as string,
       count: Number(params.count),
     };
+
+    setMode(params.mode as Mode);
     const per = matchPer(data.questionColor, data.clearColor);
     setDiffPer(per);
     setClearData(data);
   }, []);
 
   return (
-    <div>
+    <Box>
+      {mode === "extra" && (
+        <p style={{ background: "#63009c", color: "#fff" }}>エクストラモード</p>
+      )}
       <Logo></Logo>
       <h2>{clearData.count}回で見つけたよ！</h2>
       <Box>
@@ -59,14 +65,15 @@ const Clear = () => {
       </Box>
       <Box padding={1}>
         <Button
+          color="primary"
           onClick={() => {
             history.push("/");
           }}
         >
-          やってみる
+          自分も挑戦！
         </Button>
       </Box>
-    </div>
+    </Box>
   );
 };
 

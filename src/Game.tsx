@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import analyze from "rgbaster";
+import queryString from "query-string";
 import { hexToRgbStr, matchPer } from "./lib/CalcColor";
 import { Box, Grid, Fade } from "@material-ui/core";
 import Button from "./components/Button";
@@ -18,17 +19,24 @@ const Game = ({ picture }: GameProps) => {
   const [clickedColor, setClickedColor] = useState<string>();
   const [clickCount, setClickCount] = useState(-1);
   const [diffPer, setDiffPer] = useState(0);
+  const [mode, setMode] = useState<Mode>("ultimate");
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
   const history = useHistory();
+  const location = window.location;
 
   useEffect(() => {
+    const params = queryString.parse(location.search);
+    setMode(params.mode as Mode);
+
     const timer = setTimeout(function () {
       gameOver();
     }, 90_000); // 90秒
     setTimer(timer);
 
     getPictureColors();
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#333333";
   }, []);
 
   useEffect(() => {
@@ -69,12 +77,13 @@ const Game = ({ picture }: GameProps) => {
   };
 
   const checkColor = () => {
-    if (diffPer > 99) {
+    const clearLine = isExtra() ? 10 : 99;
+    if (diffPer >= clearLine) {
       clearTimeout(timer!);
       history.push(
         `/clear?question=${escape(questionColor)}&clear=${escape(
           clickedColor!
-        )}&count=${clickCount}`
+        )}&count=${clickCount}&mode=${mode}`
       );
     }
   };
@@ -85,16 +94,26 @@ const Game = ({ picture }: GameProps) => {
 
   const gameOver = () => {
     clearTimeout(timer!);
-    history.push(`/game-over`);
+    history.push(`/game-over?mode=${mode}`);
+  };
+
+  const isExtra = () => {
+    return mode === "extra";
   };
 
   return (
-    <div>
+    <Box>
       <Fade in={loading}>
         <Box>ちょっと待ってね</Box>
       </Fade>
       <Fade in={!loading}>
-        <Box>
+        <Box mb={2}>
+          {isExtra() && (
+            <p style={{ background: "#63009c", color: "#fff" }}>
+              エクストラモード
+            </p>
+          )}
+
           <p>
             <span style={{ fontSize: "2.5rem", fontWeight: "bold" }}>
               {questionColor}
@@ -118,10 +137,15 @@ const Game = ({ picture }: GameProps) => {
             clickColor={clickColor}
           ></Canvas>
           <Box padding={1}></Box>
-          <Button onClick={selectColor}>色を変える</Button>
+          <Button
+            color={isExtra() ? "secondary" : "primary"}
+            onClick={selectColor}
+          >
+            色を変える
+          </Button>
         </Box>
       </Fade>
-    </div>
+    </Box>
   );
 };
 
