@@ -77,7 +77,7 @@ const Game = ({ picture }: GameProps) => {
   };
 
   const checkColor = () => {
-    const clearLine = isExtra() ? 10 : 99;
+    const clearLine = isExtra() ? 100 : 99;
     if (diffPer >= clearLine) {
       clearTimeout(timer!);
       history.push(
