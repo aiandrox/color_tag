@@ -10,9 +10,10 @@ import Canvas from "./Canvas";
 
 type GameProps = {
   picture: string;
+  selectPicture: () => void;
 };
 
-const Game = ({ picture }: GameProps) => {
+const Game = (props: GameProps) => {
   const [loading, setLoading] = useState(true);
   const [pictureColors, setPictureColors] = useState<AnalyzedColor[]>([]);
   const [questionColor, setQuestionColor] = useState<string>("");
@@ -26,6 +27,10 @@ const Game = ({ picture }: GameProps) => {
   const location = window.location;
 
   useEffect(() => {
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#333333";
+    load();
+
     const params = queryString.parse(location.search);
     setMode(params.mode as Mode);
 
@@ -33,11 +38,12 @@ const Game = ({ picture }: GameProps) => {
       gameOver();
     }, 90_000); // 90秒
     setTimer(timer);
-
-    getPictureColors();
-    document.body.style.backgroundColor = "#ffffff";
-    document.body.style.color = "#333333";
   }, []);
+
+  const load = async () => {
+    await props.selectPicture();
+    getPictureColors();
+  };
 
   useEffect(() => {
     if (pictureColors.length) selectColor();
@@ -56,7 +62,7 @@ const Game = ({ picture }: GameProps) => {
   }, [diffPer]);
 
   const getPictureColors = async () => {
-    const result = await analyze(picture);
+    const result = await analyze(props.picture);
     setPictureColors(result.slice(10, 100));
   };
 
@@ -131,7 +137,7 @@ const Game = ({ picture }: GameProps) => {
 
           <Canvas
             type="game"
-            picture={picture}
+            picture={props.picture}
             clickColor={clickColor}
           ></Canvas>
           <Box padding={1}></Box>

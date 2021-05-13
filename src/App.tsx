@@ -51,7 +51,12 @@ const App = () => {
                 <Route exact path="/" render={() => <Top></Top>} />
                 <Route
                   path="/game"
-                  render={() => <Game picture={picture}></Game>}
+                  render={() => (
+                    <Game
+                      picture={picture}
+                      selectPicture={selectPicture}
+                    ></Game>
+                  )}
                 />
                 <Route exact path="/clear" component={Clear} />
                 <Route
