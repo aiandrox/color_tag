@@ -51,7 +51,7 @@ const Game = ({ picture }: GameProps) => {
 
   const getPictureColors = async () => {
     const result = await analyze(picture);
-    setPictureColors(result.slice(0, 100));
+    setPictureColors(result.slice(10, 100));
   };
 
   const selectColor = () => {
