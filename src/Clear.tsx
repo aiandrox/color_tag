@@ -144,7 +144,7 @@ const Clear = () => {
             history.push(`/game?mode=extra`);
           }}
         >
-          EXTRA
+          エクストラモード
         </CustomButton>
       </Box>
     </Box>
