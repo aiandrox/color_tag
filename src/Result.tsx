@@ -6,7 +6,7 @@ import { matchPer } from "./lib/CalcColor";
 import { Box, Grid } from "@material-ui/core";
 import ColorBox from "./components/ColorBox";
 import Button from "./components/Button";
-import Logo from "./Logo";
+import Logo from "./components/Logo";
 
 type ClearData = {
   questionColor: string;

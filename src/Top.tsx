@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Box, Button, SvgIcon } from "@material-ui/core";
 
-import Logo from "./Logo";
+import Logo from "./components/Logo";
 import StartButton from "./components/Button";
 import TwitterIcon from "./components/TwitterIcon";
 
