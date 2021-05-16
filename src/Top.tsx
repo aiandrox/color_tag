@@ -17,7 +17,11 @@ const Top = () => {
   return (
     <div>
       <Logo></Logo>
-      <p>おにが言った色を写真から見つけてクリックしよう！</p>
+      <p>
+        おにが言った色を
+        <Box display={{ xs: "block", sm: "none" }}></Box>
+        写真から見つけてクリックしよう！
+      </p>
       <StartButton
         color="primary"
         onClick={() => {

@@ -1,3 +1,5 @@
+import { Box } from "@material-ui/core";
+
 const Logo = () => {
   const IrooniStyle = {
     color: "#FF00A1",
@@ -9,18 +11,24 @@ const Logo = () => {
   };
 
   return (
-    <h1>
-      <div
-        style={{
-          color: "#63009c",
-          fontSize: "4rem",
-          fontFamily: "'Reggae One', cursive",
-        }}
-      >
-        アルティメット
-      </div>
-      <div style={IrooniStyle}>いろおに</div>
-    </h1>
+    <Box mt={5}>
+      <Box fontSize={20} fontWeight="bold" mb={2}>
+        カラーコードから色を当てろ！
+      </Box>
+      <Box>
+        <div
+          style={{
+            color: "#63009c",
+            fontSize: "4rem",
+            fontWeight: "bold",
+            fontFamily: "'Reggae One', cursive",
+          }}
+        >
+          アルティメット
+        </div>
+        <div style={IrooniStyle}>いろおに</div>
+      </Box>
+    </Box>
   );
 };
 
